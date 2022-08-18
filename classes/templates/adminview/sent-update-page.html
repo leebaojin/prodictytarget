@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- For input stylesheet -->
+	<!-- Using bootstrap 4.3.1 -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Prodicty - Update Sent</title>
+</head>
+
+<body>
+	<br>
+	<div class="container cardContainer">
+		<div class="row">
+			<div class="col-sm-12">
+				<h3 class="card-header-alt">Update Done</h3>
+				</br>
+				<p th:if="${mailpriceupdate != null}">Update for email : <span th:text="${mailpriceupdate}"></span></p>
+				<p th:if="${newsupdate != null}">Update for News : <span th:text="${newsupdate}"></span></p>
+				</br>
+				<button type="button"  onclick="self.close()" class="btn btn-secondary">Return</button>
+			</div>
+		</div>
+	</div>
+	
+			
+</body>

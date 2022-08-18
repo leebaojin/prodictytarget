@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicity Budget</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" th:href="@{/css/budgetform.css} " />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+	<script type="text/javascript" src="https://cdn.onemap.sg/leaflet/onemap-leaflet.js"></script>
+</head>
+
+<body>
+<div th:replace="fragments/layout :: headermenu"></div>
+	<div class="subheader">
+		Budget Calculator
+	</div>
+	<div class="sub-notification">
+		*This calculator provides a simplified estimation. For a more comprehensive calculation, please
+		use the <a href="https://homes.hdb.gov.sg/home/calculator/budget">HDB Budget Calculator</a>
+	</div>
+	<div>
+	
+	<form th:object="${budgetCal}" th:action="@{/home/budget/submitbudget}" method="post">
+	
+	<div class="container budget-data-container">
+		<div class="row data-row">
+			<div class="col-3 budget-data-prompt">
+				Property Value:
+			</div>
+			<div class="col budget-data-field">
+				$ <input class="budget-input-text-lg" type="number" th:field="*{propertyValue}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('propertyValue')}" th:errors="*{propertyValue}"></p>
+			</div>
+			
+		</div>
+		<br/>
+		<div class="row data-row">
+			<div class="col-3 budget-data-prompt">
+				Type of loan:
+			</div>
+			<div class="col budget-data-field">
+				<input type="radio" id="loan1" th:field="*{loanType}" class="budget-radio-input" value="HDB-LOAN" > 
+				<label class="budget-radio-label" for="option1">HDB Loan</label>
+				&nbsp;
+				<input type="radio" id="loan2" th:field="*{loanType}" class="budget-radio-input" value="BANK-LOAN" >
+				<label class="budget-radio-label" for="option2">Bank Loan</label>
+			</div>
+			
+		</div>
+		<div class="row data-row">
+			
+			<div class="col-3 budget-data-prompt">
+				Interest Rate:
+			</div>
+			<div class="col budget-data-field">
+				<input class="budget-input-text-st" type="number" th:field="*{interestRate}"/> %
+				<p class="form-err"th:if="${#fields.hasErrors('interestRate')}" th:errors="*{interestRate}"></p>
+			</div>
+		</div>
+		<div class="row data-row">
+			
+			<div class="col-3 budget-data-prompt">
+				Loan Duration:
+			</div>
+			<div class="col budget-data-field">
+				<input class="budget-input-text-st" type="number" th:field="*{loanDuration}"/> months
+				<p class="form-err"th:if="${#fields.hasErrors('loanDuration')}" th:errors="*{loanDuration}"></p>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col budget-info-field">
+				<p class="budget-info-text">* <a href="https://www.hdb.gov.sg/residential/servicing-your-hdb-housing-loan/loan-matters/interest-rate">HDB prevaling interest rate</a> is at 0.1% above CPF rate</p>
+				<p class="budget-info-text">* <a href="https://www.hdb.gov.sg/about-us/news-and-publications/publications/hdbspeaks/25year-loan-tenure-for-new-flats#:~:text=Why%20is%20it%20capped%20at,to%20exercise%20prudent%20financial%20planning.">Maximum HDB home loan duration</a> is 25 years (300 months) </p>
+			</div>
+		</div>
+		
+		<div class="row data-row">
+			
+			<div class="col-3 budget-data-prompt">
+				Loan Taken:
+			</div>
+			<div class="col budget-data-field">
+				<input class="budget-input-text-st" type="number" th:field="*{loanTaken}"/> % of value
+				<p class="form-err"th:if="${#fields.hasErrors('loanTaken')}" th:errors="*{loanTaken}"></p>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col budget-info-field">
+				<p class="budget-info-text">* <a href="https://www.hdb.gov.sg/residential/buying-a-flat/financing-a-flat-purchase/housing-loan-options/housing-loan-from-hdb">HDB loan: up to 85% of flat value, Financial Insituation: up to 75% of flat value</a></p>
+			</div>
+		</div>
+		
+		<br/>
+		<div class="row data-row">
+			
+			<div class="col-3 budget-data-prompt">
+				Monthly Income:
+			</div>
+			<div class="col budget-data-field">
+				$ <input class="budget-input-text-md" type="number" th:field="*{income}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('income')}" th:errors="*{income}"></p>
+			</div>
+		</div>
+		<div class="row data-row">
+			
+			<div class="col-3 budget-data-prompt">
+				Monthly Expenses:
+			</div>
+			<div class="col budget-data-field">
+				$ <input class="budget-input-text-md" type="number" th:field="*{expense}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('expense')}" th:errors="*{expense}"></p>
+			</div>
+		</div>
+		
+		
+	</div>
+	
+	<div class="budget-data-container">
+		 <button type="submit"  class="btn btn-secondary">Confirm</button>
+		 <a th:href="@{/home/budget/param}"><button type="button"  class="btn btn-secondary">Reset</button></a>
+	</div>
+	</form>
+	
+	</div>
+
+
+
+</body>
+
+
+</html>

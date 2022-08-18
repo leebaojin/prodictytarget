@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicty - Home</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" th:href="@{/css/home.css} " />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+
+<body>
+	<!-- Banner Background section -->
+	<div class="bannerContainer">
+		<div class="bannerBackground"></div>
+		<img th:src="@{/homeimages/homepagebanner.jpg}" alt="homepagebanner_img"
+			style="width: 100%; height: 100%; object-fit: cover;" />
+	</div>
+	<!-- Menu section -->
+	<div th:replace="fragments/layout :: headermenu"></div>
+	<br>
+	<!-- <div class="container d-sm-none">
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                    data-target="#searchFieldsContainer" aria-expanded="false" aria-controls="searchFieldsContainer">
+                    Button with data-target
+                </button>
+            </div>
+        </div>
+    </div> -->
+	<div class="container formContainer">
+		<div id="searchFieldsContainer">
+			<form th:action="@{/search}" method="get">
+				<div class="form-row">
+					<div class="input-group mb-3 search-bar">
+						<input class="form-control" type="search" name="keyword" placeholder="Search now!"
+							aria-label="Search" th:value="${keyword}" />
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i>
+								&nbsp;<span th:text=#{home.searchButton}></span></button>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="flatType" class="col-form-label mb-1 label-index"><i
+								class="fa fa-bed"></i>&nbsp;<span th:text=#{home.flatType}></span></label>
+						<select class="form-control" name="flatType" aria-label="flatType">
+							<option></option>
+							<option th:selected="${flatType == type}" th:value="${type}"
+								th:each="type: ${flatTypeNames}" th:text="${type}"></option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="town" class="col-form-label mb-1 label-index"><i class="fa fa-home"></i>&nbsp;<span
+								th:text=#{home.town}></span></label>
+						<select class="form-control" name="town" aria-label="town">
+							<option></option>
+							<option th:selected="${town == town_}" th:each="town_: ${towns}" th:text="${town_}">
+							</option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="leaseRemaining" class="col-form-label mb-1 label-index"><i
+								class="fas fa-edit"></i>&nbsp;<span th:text=#{home.leaseRemaining}></span></label>
+						<select class="form-control" name="leaseRemaining" aria-label="leaseRemaining">
+							<option></option>
+							<option th:selected="${minLease == lease_}" th:each="lease_: ${leaseRemainingRange}"
+								th:text="${lease_}">
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="minPriceRange" class="col-form-label mb-1 label-index"><i
+								class="fas fa-dollar-sign"></i>&nbsp;<span th:text=#{home.priceMin}></span></label>
+						<select class="form-control" name="minPrice" aria-label="minPriceRange">
+							<option></option>
+							<option th:selected="${minPrice == price_}" th:value="${price_}"
+								th:each="price_: ${minPriceRange}" th:text="${#numbers.formatCurrency(price_)}">
+							</option>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="maxPriceRange" class="col-form-label mb-1 label-index"><i
+								class="fas fa-dollar-sign"></i>&nbsp;<span th:text=#{home.priceMax}></span></label>
+						<select class="form-control" name="maxPrice" aria-label="maxPriceRange">
+							<option></option>
+							<option th:selected="${maxPrice == price_}" th:value="${price_}"
+								th:each="price_: ${maxPriceRange}" th:text="${#numbers.formatCurrency(price_)}">
+							</option>
+						</select>
+					</div>
+				</div>
+				<!-- <div class="form-row">
+                <div class="form-group col-md-12">
+                    <button class="btn btn-secondary btn-block search-bar" type="submit"><i class="fa fa-search"></i>&nbsp;<span
+                            th:text=#{home.searchButton}></span></button>
+                </div>
+            </div> -->
+			</form>
+		</div>
+	</div>
+	<br>
+	<div class="container cardContainer">
+		<div class="row">
+			<div class="col-sm-6 cardNews">
+				<h3 class="card-header" th:text=#{home.cardHeadline}></h3>
+				<div class="card" th:each="news: ${top5news}">
+					<div class="card-body">
+						<h6 class="card-title" th:text="${news.title}"></h6>
+						<p class="card-para" th:text="${#dates.format(news.date, 'dd-MMM-yyyy')}"></p>
+						<a th:href="${news.url}" target="_blank" class="btn btn-secondary"><span
+								th:text=#{home.readMoreButton}></span></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<h3 class="card-header" th:text=#{home.cardTransactionTrend}></h3>
+				<div class="card">
+					<div class="card-body">
+						<h6 class="card-title">6 Months Price Trend</h6>
+
+						<canvas id="PriceTrendChart" style="width:100%;max-width:600px;background-color:white"></canvas>
+						<br/>
+						<a th:href="@{/home/pricepredict}" class="btn btn-secondary"><span
+								>See More</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var ctx = document.getElementById('PriceTrendChart').getContext('2d');
+	var propertyData = /*[[${predictData}]]*/[];
+	var dataplot = [];
+	var xValues = [];
+	var yValues = [];
+	window.onload = function () {
+		addData(propertyData, xValues, yValues);
+		new Chart(ctx, {
+			type: "line",
+			data: {
+				labels: xValues,
+				datasets: [{
+					data: yValues,
+					borderColor: "#00aba9"
+				}]
+			},
+			options: {
+				legend: {display: false},
+
+				scales: {
+					xAxes: [{
+						type: 'time',
+						time: {
+							unit: 'month',
+							tooltipFormat: 'MMM yyyy',
+							displayFormats: {
+								'month': 'MMM yyyy',
+							}
+						},
+						gridLines: {
+							display: false
+						}
+					}],
+					yAxes: [{
+						gridLines: {
+							display: false
+						},
+						scaleLabel:{
+							display:true,
+							labelString:'Price per square m',
+						},
+						ticks: {
+							
+							callback: function (value, index, ticks) {
+								return '$' + value;
+							}
+						}
+					}]
+				},
+			}
+		});
+
+	}
+	function addData2(data, dataset) {
+		for (var i = 0; i < data.length; i++) {
+			dataset.push({
+				x: new Date(data[i].date),
+				y: data[i].price_per_sq_m
+			});
+
+		}
+
+	}
+
+	function addData(data, xdata, ydata) {
+		for (var i = 0; i < data.length; i++) {
+
+			xdata.push(new Date(data[i].date));
+			ydata.push(data[i].price_per_sq_m);
+
+		}
+
+	}
+
+
+	/*]]>*/
+
+</script>
+
+</html>

@@ -1,0 +1,78 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/propertylist.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+	<script type="text/javascript" th:src="@{/scripts/selectprimaryimg.js}"></script>
+	<title>Property Form</title>
+</head>
+
+<body>
+<div th:replace="fragments/layout :: headermenu"></div>
+<br/>
+	<div class="container">
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8 img-body">
+				<br />
+				<h2>Image Management</h2>
+				<form th:if="${#lists.size(property.propertyImages)<3}" method="post"
+					th:action="@{/property/upload-images/upload}" enctype="multipart/form-data">
+					<input type="hidden" name="propertyId" th:field="${property.propertyId}" />
+					<input type="file" name="image" accept="image/png, image/jpeg" />
+					<br />
+					<br />
+					<input type="submit" value="submit" class="btn btn-secondary"></input>
+				</form>
+				<p th:if="${#lists.size(property.propertyImages)>=3}">A maximum of 3 images can be uploaded</p>
+				<br />
+				<h5>Images Uploaded</h5>
+				<div class="container" th:if="${not #lists.isEmpty(property.propertyImages)}">
+					<div class="row">
+						<div class="col-1 head-title-sm">Image</div>
+						<div class="col-2 head-title">Name</div>
+						<div class="col-2 head-title-sm">Delete</div>
+						<div class="col-1 head-title-sm">Main</div>
+					</div>
+					<div class="row" th:each="propimg, iStat : ${property.propertyImages}">
+						<div class="col-1 img-info-sm">
+							<div class="upload-image-holder">
+								<img class="upload-image" th:src="@{/{imagePath}(imagePath=${propimg.imagePath})}" />
+							</div>
+						</div>
+						<div class="col-2 img-info">
+							<div class="text-dys"><span style="text-overflow: ellipsis; display: block; overflow: hidden;" th:text="${propimg.imageFileName}"></span></div>
+						</div>
+						<div class="col-2 img-info-sm">
+							<div class="text-dys"><a
+									th:href="@{/property/delete-images/delete(propId=${property.propertyId},imgId=${propimg.imageId})}">Delete</a>
+							</div>
+
+						</div>
+						<div class="col-1 img-info-sm">
+							<div class="dot-holder">
+								<span th:id="'mainsel-'+${iStat.index}"
+									th:classappend="${propimg.mainImg} ? dot : dot-none"
+									th:attr="onclick=|switchPrimary('${propimg.imageId}','${property.propertyId}','${iStat.index}')|"></span>
+							</div>
+						</div>
+					</div>
+					<br/>
+				</div>
+				<a th:href="@{/property/edit-property/{id}(id=${property.propertyId})}"><button type="button"
+							class="btn btn-secondary">Back</button></a>
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>
+	<input th:if="${_csrf != null}" type="hidden" id="CFvalue" th:value="${_csrf.token}"/>
+</body>
+
+<script th:inline="javascript" th:if="${_csrf != null}">
+	/*<![CDATA[*/
+	var CFvalue = /*[[${_csrf.token}]]*/ null;
+	/*]]>*/
+</script>
+
+</html>

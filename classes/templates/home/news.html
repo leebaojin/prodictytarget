@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicty - News</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" th:href="@{/css/home.css} " />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	</div>
+	<!-- Menu section -->
+	<div th:replace="fragments/layout :: headermenu"></div>
+	<br>
+	<nav>
+		<div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+			<button class="nav-link mainTab active" id="nav-all-news-tab" data-toggle="tab" data-target="#nav-all-news"
+				type="button" role="tab" aria-controls="nav-all-news" aria-selected="true">All News</button>
+
+			<button class="nav-link mainTab" id="nav-bto-tab" data-toggle="tab" data-target="#nav-bto" type="button"
+				role="tab" aria-controls="nav-bto" aria-selected="false">Build-To-Order (BTO)</button>
+			<button class="nav-link mainTab" id="nav-ec-tab" data-toggle="tab" data-target="#nav-ec" type="button"
+				role="tab" aria-controls="nav-ec" aria-selected="false">Executive Condo (EC)</button>
+			<button class="nav-link mainTab" id="nav-resale-tab" data-toggle="tab" data-target="#nav-resale"
+				type="button" role="tab" aria-controls="nav-resale" aria-selected="false">Resale </button>
+			<button class="nav-link mainTab" id="nav-finance-tab" data-toggle="tab" data-target="#nav-finance"
+				type="button" role="tab" aria-controls="nav-finance" aria-selected="false">Finance</button>
+		</div>
+	</nav>
+	<div class="tab-content container" id="nav-tabContent">
+		<div class="tab-pane fade show active" id="nav-all-news" role="tabpanel" aria-labelledby="nav-all-news-tab">
+			<div class="row" th:if="${#lists.isEmpty(allHolder[0].listOfNews)}">
+				<div class="col">No News Found</div>
+			</div>
+			<div class="row" th:if="${not #lists.isEmpty(allHolder[0].listOfNews)}">
+				<div class="col">
+					<nav>
+						<div class="nav nav-tabs" id="all-page-tab" role="tablist">
+
+							<button th:each="listnews, iStat:${allHolder}" class="nav-link subClick"
+								th:id="${'all-nav-news-pg-'+iStat.index}+'-tab'" data-toggle="tab" role="tab"
+								type="button" th:classappend="${iStat.index==0?'active':''}" th:attr="data-target='#nav-all-news-pg-'+${iStat.index}, aria-selected=${iStat.index==0?'true':'false'},
+									aria-controls='nav-all-news-pg-'+${iStat.index}">
+								<span th:text="${iStat.index+1}"></span>
+							</button>
+
+						</div>
+					</nav>
+					<div th:each="listnews, iStat:${allHolder}">
+						<div class="tab-pane subTab" th:id="${'nav-all-news-pg-'+iStat.index}" role="tabpanel"
+							th:classappend="${iStat.index==0?'show active':''}"
+							th:attr="aria-labelledby='all-nav-news-pg-'+${iStat.index}+'-tab'">
+							<div class="row">
+
+								<div class="col-md-6" style="padding-top: 15px;" th:each="news: ${listnews.listOfNews}">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title news-title" th:text="${news.title}"></h5>
+											<p class="card-text" th:text="${#dates.format(news.date, 'dd-MMM-yyyy')}">
+											</p>
+											<a th:href="${news.url}" target="_blank" class="btn btn-secondary">Read
+												More</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="nav-bto" role="tabpanel" aria-labelledby="nav-bto-tab">
+			<div class="row" th:if="${#lists.isEmpty(btoHolder[0].listOfNews)}">
+				<div class="col">No News Found</div>
+			</div>
+			<div class="row" th:if="${not #lists.isEmpty(btoHolder[0].listOfNews)}">
+				<div class="col">
+					<nav>
+						<div class="nav nav-tabs" id="bto-page-tab" role="tablist">
+
+							<button th:each="listnews, iStat:${btoHolder}" class="nav-link subClick"
+								th:id="${'bto-nav-news-pg-'+iStat.index}+'-tab'" data-toggle="tab" role="tab"
+								type="button"  th:attr="data-target='#nav-bto-news-pg-'+${iStat.index}, aria-selected=${'false'},
+									aria-controls='nav-bto-news-pg-'+${iStat.index}">
+								<span th:text="${iStat.index+1}"></span>
+							</button>
+
+						</div>
+					</nav>
+					<div th:each="listnews, iStat:${btoHolder}">
+						<div class="tab-pane subTab" th:id="${'nav-bto-news-pg-'+iStat.index}" role="tabpanel"
+							
+							th:attr="aria-labelledby='bto-nav-news-pg-'+${iStat.index}+'-tab'">
+							<div class="row">
+
+								<div class="col-md-6" style="padding-top: 15px;" th:each="news: ${listnews.listOfNews}">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title news-title" th:text="${news.title}"></h5>
+											<p class="card-text" th:text="${#dates.format(news.date, 'dd-MMM-yyyy')}">
+											</p>
+											<a th:href="${news.url}" target="_blank" class="btn btn-secondary">Read
+												More</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="nav-ec" role="tabpanel" aria-labelledby="nav-ec-tab">
+			<div class="row" th:if="${#lists.isEmpty(ecHolder[0].listOfNews)}">
+				<div class="col">No News Found</div>
+			</div>
+			<div class="row" th:if="${not #lists.isEmpty(ecHolder[0].listOfNews)}">
+				<div class="col">
+					<nav>
+						<div class="nav nav-tabs" id="ec-page-tab" role="tablist">
+
+							<button th:each="listnews, iStat:${ecHolder}" class="nav-link subClick"
+								th:id="${'ec-nav-news-pg-'+iStat.index}+'-tab'" data-toggle="tab" role="tab"
+								type="button"  th:attr="data-target='#nav-ec-news-pg-'+${iStat.index}, aria-selected=${'false'},
+									aria-controls='nav-ec-news-pg-'+${iStat.index}">
+								<span th:text="${iStat.index+1}"></span>
+							</button>
+
+						</div>
+					</nav>
+					<div th:each="listnews, iStat:${ecHolder}">
+						<div class="tab-pane subTab" th:id="${'nav-ec-news-pg-'+iStat.index}" role="tabpanel"
+							
+							th:attr="aria-labelledby='ec-nav-news-pg-'+${iStat.index}+'-tab'">
+							<div class="row">
+
+								<div class="col-md-6" style="padding-top: 15px;" th:each="news: ${listnews.listOfNews}">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title news-title" th:text="${news.title}"></h5>
+											<p class="card-text" th:text="${#dates.format(news.date, 'dd-MMM-yyyy')}">
+											</p>
+											<a th:href="${news.url}" target="_blank" class="btn btn-secondary">Read
+												More</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="nav-resale" role="tabpanel" aria-labelledby="nav-resale-tab">
+			<div class="row" th:if="${#lists.isEmpty(resaleHolder[0].listOfNews)}">
+				<div class="col">No News Found</div>
+			</div>
+			<div class="row" th:if="${not #lists.isEmpty(resaleHolder[0].listOfNews)}">
+				<div class="col">
+					<nav>
+						<div class="nav nav-tabs" id="resale-page-tab" role="tablist">
+
+							<button th:each="listnews, iStat:${resaleHolder}" class="nav-link subClick"
+								th:id="${'resale-nav-news-pg-'+iStat.index}+'-tab'" data-toggle="tab" role="tab"
+								type="button"  th:attr="data-target='#nav-resale-news-pg-'+${iStat.index}, aria-selected=${'false'},
+									aria-controls='nav-resale-news-pg-'+${iStat.index}">
+								<span th:text="${iStat.index+1}"></span>
+							</button>
+
+						</div>
+					</nav>
+					<div th:each="listnews, iStat:${resaleHolder}">
+						<div class="tab-pane subTab" th:id="${'nav-resale-news-pg-'+iStat.index}" role="tabpanel"
+							
+							th:attr="aria-labelledby='resale-nav-news-pg-'+${iStat.index}+'-tab'">
+							<div class="row">
+
+								<div class="col-md-6" style="padding-top: 15px;" th:each="news: ${listnews.listOfNews}">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title news-title" th:text="${news.title}"></h5>
+											<p class="card-text" th:text="${#dates.format(news.date, 'dd-MMM-yyyy')}">
+											</p>
+											<a th:href="${news.url}" target="_blank" class="btn btn-secondary">Read
+												More</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="nav-finance" role="tabpanel" aria-labelledby="nav-finance-tab">
+			<div class="row" th:if="${#lists.isEmpty(financeHolder[0].listOfNews)}">
+				<div class="col">No News Found</div>
+			</div>
+			<div class="row" th:if="${not #lists.isEmpty(financeHolder[0].listOfNews)}">
+				<div class="col">
+					<nav>
+						<div class="nav nav-tabs" id="finance-page-tab" role="tablist">
+
+							<button th:each="listnews, iStat:${financeHolder}" class="nav-link subClick"
+								th:id="${'finance-nav-news-pg-'+iStat.index}+'-tab'" data-toggle="tab" role="tab"
+								type="button"  th:attr="data-target='#nav-finance-news-pg-'+${iStat.index}, aria-selected=${'false'},
+									aria-controls='nav-finance-news-pg-'+${iStat.index}">
+								<span th:text="${iStat.index+1}"></span>
+							</button>
+
+						</div>
+					</nav>
+					<div th:each="listnews, iStat:${financeHolder}">
+						<div class="tab-pane subTab" th:id="${'nav-finance-news-pg-'+iStat.index}" role="tabpanel"
+							
+							th:attr="aria-labelledby='finance-nav-news-pg-'+${iStat.index}+'-tab'">
+							<div class="row">
+
+								<div class="col-md-6" style="padding-top: 15px;" th:each="news: ${listnews.listOfNews}">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title news-title" th:text="${news.title}"></h5>
+											<p class="card-text" th:text="${#dates.format(news.date, 'dd-MMM-yyyy')}">
+											</p>
+											<a th:href="${news.url}" target="_blank" class="btn btn-secondary">Read
+												More</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+	</div>
+</body>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(document).ready(function () {
+		$(".nav-link.mainTab").click(function (){
+			var idto = $(this).attr("data-target");
+			var panel = $(idto);
+			var ele = panel.find(".nav-link.subClick");
+			if(ele.length != 0){
+				var firstEle = ele.first();
+				var todes = firstEle.attr("data-target");
+				var subpanel = $(firstEle.attr("data-target"));
+				ele.removeClass("active");
+				firstEle.addClass("active");
+				subpanel.css("display", "block");
+				subpanel.addClass("active show");
+			}
+			
+		});
+
+		$(".nav-link.subClick").click(function () {
+			var me = $(this);
+			var idto = $(this).attr("data-target");
+			var panel = $(idto);
+			var ele =$(".tab-pane.subTab.active");
+			$(".tab-pane.subTab.active").css("display", "none");
+			$(".tab-pane.subTab.active").removeClass("active show");
+			
+			panel.addClass("active show");
+			panel.css("display", "block");
+			
+		});
+		
+		$(".tab-pane.subTab").css("display", "none");
+		$(".tab-pane.subTab").removeClass("active show");
+		
+		var btn = $("#all-nav-news-pg-0-tab");
+		if(btn != null){
+			var btnLinkTo = btn.attr("data-target");
+			var panelLinked = $(btnLinkTo);
+			btn.addClass("active");
+			panelLinked.addClass("active show");
+			panelLinked.css("display", "block");
+		}
+
+	});
+
+	/*]]>*/
+</script>
+
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicity Property View</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" th:href="@{/css/propertylist.css} " />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+	<script type="text/javascript" src="https://cdn.onemap.sg/leaflet/onemap-leaflet.js"></script>
+	<script type="text/javascript" th:src="@{/scripts/propertyview.js}"></script>
+
+	<meta th:if="${metaheader != null}" property="og:url"
+		th:content="${metaheader.pageUrl}" />
+	<meta property="og:type" content="website" />
+	<meta th:if="${metaheader != null}" property="og:title" th:content="${metaheader.title}" />
+	<meta th:if="${metaheader != null}" property="og:description" th:content="${metaheader.address}" />
+	<meta th:if="${metaheader != null}" property="og:image"
+		th:content="${metaheader.imgUrl}" />
+</head>
+
+<body>
+	<div id="fb-root"></div>
+	<script>(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
+
+	<div th:replace="fragments/layout :: headermenu"></div>
+
+	<br />
+	<div>
+		<div class="subheader">
+			Property Listing
+		</div>
+	</div>
+	<div class="property-body">
+		<div class="property-allimg">
+			<!-- Image omitted for prototype -->
+			<div th:if="${not #lists.isEmpty(property.propertyImages)}">
+				<div class="property-mainimg-holder">
+					<img class="property-mainimg" id="propimg-main"
+						th:src="@{/{imagePath}(imagePath=${propertyMainImg.imagePath})}" />
+				</div>
+			</div>
+			<div th:if="${#lists.isEmpty(property.propertyImages)}">
+				<div class="property-mainimg-holder">
+					<img class="property-mainimg" id="propimg-main" th:src="@{/homeimages/noimagefound.jpg}" />
+				</div>
+			</div>
+
+			<br />
+			<div th:if="${not #lists.isEmpty(property.propertyImages)}">
+				<div class="property-imglist">
+					<div class="property-small" th:each="propimg, iStat : ${property.propertyImages}">
+
+						<img class="property-subimg" th:id="'smallimg-'+${iStat.index}"
+							th:src="@{/{imagePath}(imagePath=${propimg.imagePath})}"
+							onclick="changeImgDisplay(this,'propimg-main')" />
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<br />
+
+		<div class="property-info">
+			<hr />
+			<div class="property-fav-holder">
+				<span th:if="${navBarData != null and skipFav == null}" class="likeAndShare">
+					<span th:if="${favouriteItem != null and favouriteItem}" class="fa fa-heart fa-sel" id="favDisplay"
+						target="1"
+						th:attr="onclick=|favouritePropChange('${customerId}','${property.propertyId}')|"></span>
+
+					<span th:if="${favouriteItem == null}" class="fa fa-heart fa-unsel" id="favDisplay" target="0"
+						th:attr="onclick=|favouritePropChange('${customerId}','${property.propertyId}')|"></span>
+					favourite
+				</span>
+				&nbsp;&nbsp;
+				<span class="likeAndShare">
+					<a th:href="@{mailto:{to}(to='',subject=${shareMail.subject},body=${shareMail.body})}">
+						<span class="fa fa-envelope"></span> Email</a> 
+				</span>
+				
+				<div th:if="${metaheader != null}" class="fb-share-button" th:attr="data-href=|${metaheader.pageUrl}|"
+					data-layout="button_count">
+				</div>
+				
+			</div>
+			<div class="property-fav-holder">
+				<a th:href="${qrDisplayUrl}" target="popup"
+					th:attr="onclick=|window.open('${qrDisplayUrl}','QR Display','width=350,height=350')|">QR Code <span
+						class="fa fa-solid fa-qrcode"></span></a>
+
+			</div>
+		</div>
+
+		<div>
+			<div class="container property-info">
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Address:
+					</div>
+					<div class="col property-data">
+						<span th:text="${property.getFullAddress()}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Asking Price:
+					</div>
+					<div class="col-6 property-data">
+						$ <span th:text="${#numbers.formatDecimal(property.price, 0, 'COMMA', 2, 'POINT')}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Description:
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.propertyDesc}"></span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<br />
+		<div>
+			<div class="subheader">
+				Property Information
+			</div>
+		</div>
+
+		<div>
+
+			<div class="container property-info">
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Type :
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.flatType.flatTypeName}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Model :
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.flatModel.flatModelName}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Town :
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.town.townName}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Lease-Year :
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.leaseYear}"></span> (99 years)
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Floor Area :
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.floorArea}"></span> m<sup>2</sup>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<br />
+		<div class="map-container">
+			<div id='mapdiv' style='height:350px;'></div>
+		</div>
+
+		<br />
+
+		<div>
+			<div class="subheader">
+				Contact Details
+			</div>
+		</div>
+
+		<div>
+			<div class="container property-info">
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Name:
+					</div>
+					<div class="col property-data">
+						<span th:text="${property.customer.user.getFullName()}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Email:
+					</div>
+					<div class="col property-data">
+						<a th:if="${contactOwner != null}"
+							th:href="@{mailto:{to}(to=${contactOwner.toEmail},subject=${contactOwner.subject},body=${contactOwner.body})}">
+							<span th:text="${property.customer.user.username}"></span>
+						</a>
+						<span th:if="${contactOwner == null}" th:text="${property.customer.user.username}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Phone:
+					</div>
+					<div class="col-6 property-data">
+						<span th:text="${property.customer.user.phone}"></span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<br />
+		<div>
+			<div class="subheader">
+				Price Prediction & Trends
+			</div>
+		</div>
+
+		<span>
+			<div class="container property-info">
+				<div class="row">
+					<div class="col-2 property-prompt">
+						Current Estimated:
+					</div>
+					<div class="col-6 property-data">
+						$ <span th:if="${predictedPrice != 'NA'}"
+							th:text="${#numbers.formatDecimal(predictedPrice, 0, 'COMMA', 2, 'POINT')}"></span>
+						<span th:if="${predictedPrice == 'NA'}" th:text="${predictedPrice}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 property-prompt">
+					</div>
+					<div class="col-8 property-data">
+						<span class="disclaimer"> *Price estimated based on past transactions. Actual price may defer
+						</span>
+					</div>
+				</div>
+			</div>
+
+	</div>
+	<br />
+
+	<div class="map-container">
+		<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+	</div>
+
+
+</body>
+
+<script type="text/javascript" th:src="@{/scripts/propertymapscript.js}"></script>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var CFvalue = /*[[${_csrf.token}]]*/ null;
+/*]]>*/
+</script>
+<script th:inline="javascript" th:if="${coordinate != null}">
+	/*<![CDATA[*/
+
+	var longitude1 = /*[[${coordinate.longitude}]]*/ null;
+	var latitude1 = /*[[${coordinate.latitude}]]*/ null;
+
+
+	window.onload = function () {
+		if (longitude1 != null && latitude1 != null) {
+			showPositionGeo(latitude1, longitude1);
+
+		}
+		setMapView(latitude1, longitude1);
+
+		var rawData = /*[[${plotdata}]]*/[];
+		var rawData2 = /*[[${plotpredictdata}]]*/[];
+		var dataPoints = [];
+		var dataPoints2 = [];
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			zoomEnabled: true,
+			title: {
+				text: "Property Price Trend"
+			},
+			axisX: {
+				gridThickness: 0,
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true,
+					valueFormatString: "DD MMM"
+				}
+			},
+			axisY: {
+				title: "Estimated Price SGD",
+				gridThickness: 0,
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true,
+					valueFormatString: "$#,##0"
+				}
+			},
+			data: [{
+				type: "line",
+				name: "Previous",
+				xValueFormatString: "DD MMM",
+				yValueFormatString: "$#,##0.00",
+				xValueType: "dateTime",
+				dataPoints: dataPoints
+			}, {
+				type: "line",
+				name: "Future",
+				xValueFormatString: "DD MMM",
+				yValueFormatString: "$#,##0.00",
+				xValueType: "dateTime",
+				dataPoints: dataPoints2
+			}]
+		});
+
+		function addData(data, datapt) {
+			for (var i = 0; i < data.length; i++) {
+				datapt.push({
+					x: new Date(data[i].date),
+					y: data[i].predicted_price
+				});
+			}
+			chart.render();
+		}
+
+
+		addData(rawData, dataPoints);
+		addData(rawData2, dataPoints2);
+
+	}
+
+	/*]]>*/
+</script>
+
+<script th:inline="javascript" th:if="${coordinate == null}">
+	/*<![CDATA[*/
+
+
+	window.onload = function () {
+
+		var rawData = /*[[${plotdata}]]*/[];
+		var rawData2 = /*[[${plotpredictdata}]]*/[];
+		var dataPoints = [];
+		var dataPoints2 = [];
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			zoomEnabled: true,
+			title: {
+				text: "Property Price Trend"
+			},
+			axisX: {
+				gridThickness: 0,
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true,
+					valueFormatString: "DD MMM"
+				}
+			},
+			axisY: {
+				title: "Estimated Price SGD",
+				gridThickness: 0,
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true,
+					valueFormatString: "$#,##0"
+				}
+			},
+			data: [{
+				type: "line",
+				name: "Previous",
+				xValueFormatString: "DD MMM",
+				yValueFormatString: "$#,##0.00",
+				xValueType: "dateTime",
+				dataPoints: dataPoints
+			}, {
+				type: "line",
+				name: "Future",
+				xValueFormatString: "DD MMM",
+				yValueFormatString: "$#,##0.00",
+				xValueType: "dateTime",
+				dataPoints: dataPoints2
+			}]
+		});
+
+		function addData(data, datapt) {
+			for (var i = 0; i < data.length; i++) {
+				datapt.push({
+					x: new Date(data[i].date),
+					y: data[i].price
+				});
+			}
+			chart.render();
+		}
+
+
+		addData(rawData, dataPoints);
+		addData(rawData2, dataPoints2);
+
+	}
+
+
+
+	/*]]>*/
+</script>
+
+</html>

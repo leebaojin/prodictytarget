@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicity Customer Profile</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" th:href="@{/css/customerform.css} " />
+</head>
+
+<body>
+	<div th:replace="fragments/layout :: headermenu"></div>
+	<div class="subheader">
+		Profile
+	</div>
+
+	<br/>
+	
+	<div class="container customer-data-container">
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				First Name:
+			</div>
+			<div class="col data-dys">
+				<span th:text="${customer.user.firstName}"></span>
+			</div>
+		</div>
+		
+		
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				Last Name:
+			</div>
+			<div class="col data-dys">
+				<span th:text="${customer.user.lastName}"></span>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				Phone No:
+			</div>
+			<div class="col data-dys">
+				<span th:text="${customer.user.phone}"></span>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				Email:
+			</div>
+			<div class="col data-dys">
+				<span th:text="${customer.user.username}"></span>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				Notification:
+			</div>
+			<div class="col data-dys">
+				<span th:if="${customer.notification}">Enabled</span>
+				<span th:if="${not customer.notification}">Disabled</span>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				Password:
+			</div>
+			<div class="col data-dys">
+				<a th:href="@{/user/changeaccess}">Change Password</a>
+			</div>
+		</div>
+		<div class="row data-row">
+			<div class="col-4 data-prompt">
+				Properties Listed:
+			</div>
+			<div class="col data-dys">
+				<a th:href="@{/property/list-properties}">View Properties Listed</a>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="customer-data-container">
+		 <a th:href="@{/user/changeprofile}"><button type="button"  class="btn btn-secondary">Edit</button></a>
+	</div>
+
+</body>
+
+</html>

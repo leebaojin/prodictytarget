@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicity Budget</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/home}" />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" th:href="@{/css/budgetform.css} " />
+</head>
+
+<body>
+	<div th:replace="fragments/layout :: headermenu"></div>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="container">
+				<h2 class="card-header-alt"> Calculated Budget</h2>
+				<br />
+				
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculator.label.loanTaken}">Loan Taken:</label>
+					<div class="col-sm-9">
+						$ <span th:text="${#numbers.formatDecimal(budgetCalData.loanTaken, 0, 'COMMA', 2, 'POINT')}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculator.label.downpayment}">Downpayment:</label>
+					<div class="col-sm-9">
+						$ <span th:text="${#numbers.formatDecimal(budgetCalData.downpayment, 0, 'COMMA', 2, 'POINT')}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculator.label.totalInterest}">Total Interest:</label>
+					<div class="col-sm-9">
+						$ <span th:text="${#numbers.formatDecimal(budgetCalData.totalInterest, 0, 'COMMA', 0, 'POINT')}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculator.label.repayment}">Monthly Repayment:</label>
+					<div class="col-sm-9">
+						$ <span
+					th:text="${#numbers.formatDecimal(budgetCalData.monthlyRepayment, 0, 'COMMA', 2, 'POINT')}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculator.label.loanToIncomeRatio}">Loan to income ratio:</label>
+					<div class="col-sm-9">
+						<span th:classappend="${budgetCalData.getRatio()}>30 ? warning-val"
+					th:text="${#numbers.formatDecimal(budgetCalData.getRatio(), 0, 'COMMA', 2, 'POINT')}"></span> %
+						<p class="budget-info-text ">* Ratio should not exceed 30%</p>
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculator.label.availableIncome}">Available Income:</label>
+					<div class="col-sm-9">
+						$ <span th:classappend="${budgetCalData.getAvilIncome()}<0 ? warning-val"
+					th:text="${#numbers.formatDecimal(budgetCalData.getAvilIncome(), 0, 'COMMA', 2, 'POINT')}"></span>
+					<p class="budget-info-text">* Consider expense of <span th:text="${budgetCalData.expense}"></span></p>
+					</div>
+				</div>
+				
+				<br/>
+				<a th:href="@{/home/budget/param}"><button type="button" class="btn btn-secondary">Return</button></a>
+			</div>
+		</div>
+	</div>
+
+</body>

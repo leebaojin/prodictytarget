@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Prodicity Registration</title>
+	<!-- For input stylesheet -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" th:href="@{/css/customerform.css} " />
+</head>
+
+<body>
+		<div class="subheader">
+			Customer Registration
+		</div>
+	
+	
+		<div class="register-info">
+			Please input the required fields for registering of new account
+		</div>
+	<br/>
+	
+	<div class="form-holder">
+		<form th:object="${customerR}" th:action="@{/account-matter/newuser/save}" method="post">
+			<filedset>
+				<input type="hidden" th:field="*{id}"/>
+			</filedset>
+			<fieldset>
+				<p class="form-prompt" th:text="#{customerform.email}"></p>
+				<input class="form-input-text" type="text" th:field="*{email}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+				<p class="form-err"th:if="${emailUsedErr != null and emailUsedErr}">*Email Already Used</p>
+			</fieldset>
+			<br/>
+			<fieldset>
+				<p class="form-prompt" th:text="#{customerform.firstName}"></p>
+				<input class="form-input-text" type="text" th:field="*{firstName}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+			</fieldset>
+			<fieldset>
+				<p class="form-prompt" th:text="#{customerform.lastName}"></p>
+				<input class="form-input-text" type="text" th:field="*{lastName}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+			</fieldset>
+			<br/>
+			<fieldset>
+				<p class="form-prompt" th:text="#{customerform.phoneNo}"></p>
+				<input class="form-input-text" type="text" th:field="*{phone}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+			</fieldset>
+			<br/>
+			<fieldset>
+				<p class="form-prompt" th:text="#{customerform.password}"></p>
+				<input class="form-input-text" type="password"  th:field="*{password}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+			</fieldset>
+			<fieldset>
+				<p class="form-prompt" th:text="#{customerform.passwordconfirm}"></p>
+				<input class="form-input-text" type="password" th:field="*{confirmpassword}"/>
+				<p class="form-err"th:if="${#fields.hasErrors('confirmpassword')}" th:errors="*{confirmpassword}"></p>
+			</fieldset>
+			<br/>
+			<fieldset>
+				<span class="form-prompt" th:text="#{customerform.notification}"></span>
+				<input class="form-input-box" type="checkbox" th:field="*{notification}" value="true"/>
+			</fieldset>
+			<br/>
+			<fieldset>
+			<button type="submit"  class="btn btn-primary">Submit</button>
+			<a th:href="@{/login}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+			</fieldset>
+			
+		</form>
+		
+	</div>
+	<br/>
+	<br/>
+
+
+</body>
+
+</html>

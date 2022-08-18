@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Prodicty - Search Results</title>
+    <!-- For input stylesheet -->
+    <link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+    <link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.css} " />
+    <link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+    <link th:rel="stylesheet" th:href="@{/css/home.css} " />
+    <script type="text/javascript" th:src="@{/scripts/search.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <!-- <div class="bannerContainer">
+        <div class="bannerBackground"></div>
+        <img th:src="@{homeimages/homepagebanner.jpg}" alt="homepagebanner_img"
+            style="width: 100%; height: 100%; object-fit: cover;" />
+    </div> -->
+    <!-- Menu section -->
+    <div th:replace="fragments/layout :: headermenu"></div>
+    <br>
+    <div class="container formContainer">
+        <form th:action="@{/search}" method="get">
+
+            <div class="form-row">
+                <div class="input-group mb-3 search-bar-alt">
+                    <input class="form-control" type="search" name="keyword" id="textField" placeholder="Search now!"
+                        aria-label="Search" th:value="${keyword}" />
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i>
+                            &nbsp;<span th:text=#{home.searchButton}></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="flatType" class="col-form-label mb-1 label-alt"><i class="fa fa-bed"></i>&nbsp;<span
+                            th:text=#{home.flatType}></span></label>
+                    <select class="form-control" name="flatType" id="filterField1" aria-label="flatType">
+                        <option></option>
+                        <option th:selected="${flatType == type}" th:value="${type}" th:each="type: ${flatTypeNames}"
+                            th:text="${type}"></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="town" class="col-form-label mb-1 label-alt"><i class="fa fa-home"></i>&nbsp;<span
+                            th:text=#{home.town}></span></label>
+                    <select class="form-control" name="town" id="filterField2" aria-label="town">
+                        <option></option>
+                        <option th:selected="${town == town_}" th:each="town_: ${towns}" th:text="${town_}"></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="leaseRemainingRange" class="col-form-label mb-1 label-alt"><i
+                            class="fas fa-edit"></i>&nbsp;<span th:text=#{home.leaseRemaining}></span></label>
+                    <select class="form-control" name="leaseRemaining" id="filterField3" aria-label="leaseRemainingRange">
+                        <option></option>
+                        <option th:selected="${leaseRemaining == lease_}" th:each="lease_: ${leaseRemainingRange}"
+                            th:text="${lease_}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="minPriceRange" class="col-form-label mb-1 label-alt"><i
+                            class="fas fa-dollar-sign"></i>&nbsp;<span th:text=#{home.priceMin}></span></label>
+                    <select class="form-control" name="minPrice" id="filterField4" aria-label="minPriceRange">
+                        <option></option>
+                        <option th:selected="${minPrice == price_}" th:value="${price_}"
+                            th:each="price_: ${minPriceRange}" th:text="${#numbers.formatCurrency(price_)}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="maxPriceRange" class="col-form-label mb-1 label-alt"><i
+                            class="fas fa-dollar-sign"></i>&nbsp;<span th:text=#{home.priceMax}></span></label>
+                    <select class="form-control" name="maxPrice" id="filterField5" aria-label="maxPriceRange">
+                        <option></option>
+                        <option th:selected="${maxPrice == price_}" th:value="${price_}"
+                            th:each="price_: ${maxPriceRange}" th:text="${#numbers.formatCurrency(price_)}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <button  class="btn btn-outline-secondary" onClick="jsResetForm();">Reset Form</button>
+        <!-- <a class="btn btn-outline-secondary"
+            href="/search?keyword=&flatType=&town=&minLease=&maxLease=&minPrice=&maxPrice=">Reset Form</a> -->
+    </div>
+    <br>
+    <div class="container cardContainer">
+        <div class="row">
+            <div class="col-sm-12 cardNews">
+                <h3 class="card-header-alt"><span th:text=#{searchresults.searchResults}></span>&nbsp;'<span
+                        th:text="${keyword}"></span>'</h3>
+                <br />
+                <div class="card card-no-border" th:if="${lastEntry > 0 and totalPages > 1}">
+                    <div class="card-body row">
+                        <div class="col-md-4">
+                            <form th:action="@{/search}" method="get" id="searchForm">
+                                <input type="hidden" name="keyword" th:value="${keyword}" />
+                                <input type="hidden" name="flatType" th:value="${type}" />
+                                <input type="hidden" name="town" th:value="${town}" />
+                                <input type="hidden" name="minLease" th:value="${minLease<= 0? null:minLease}" />
+                                <input type="hidden" name="maxLease" th:value="${maxLease<= 0? null:maxLease}" />
+                                <input type="hidden" name="minPrice" th:value="${minPrice<= 0? null:minPrice}" />
+                                <input type="hidden" name="maxPrice" th:value="${maxPrice <= 0? null:maxPrice}" />
+                                <a th:if="${currentPage>1}" th:attr="onclick=|changePage('${currentPage-1}')|"><span
+                                        class="arrow left"></span></a>&nbsp;
+                                <input class="pageBox" type="text" name="pageNo" th:value="${currentPage}"
+                                    id="openPage" />&nbsp;
+                                <a th:if="${currentPage<totalPages}"
+                                    th:attr="onclick=|changePage('${currentPage+1}')|"><span
+                                        class="arrow right"></span></a> &nbsp;&nbsp; of <span
+                                    th:text="${totalPages}"></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="pageResult">(Result <span th:text="${firstEntry}"></span> - <span
+                                        th:text="${lastEntry}"></span> of <span th:text="${totalItems}"></span>)</span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" th:each="result: ${searchResults}">
+                    <div class="card-body row">
+                        <div class="col-md-4">
+                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                <img th:if="${#lists.isEmpty(result.propertyImages)}"
+                                    th:src="@{/homeimages/noimagefound.jpg}" class="card-img-top" />
+                                <img th:if="${not #lists.isEmpty(result.propertyImages)}"
+                                    th:src="@{/{imglink}(imglink=${result.getMainImgPath()})}" class="card-img-top" />
+                                <a href="#!">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title" th:text="${result.propertyName}"></h4>
+                                <h5 class="card-title" th:text="${result.getFullAddress()}"></h5>
+                                <h6>$<span
+                                        th:text="${#numbers.formatDecimal(result.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                                </h6>
+                                <!-- <h6 th:text="${#numbers.formatCurrency(result.price)}"></h6> -->
+                                <a class="btn btn-secondary" th:href="@{/viewproperty/getprop/} + ${result.propertyId}"
+                                    th:text=#{searchresults.viewButton}></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" th:if="${#lists.isEmpty(searchResults)}">
+                    <div class="card-body">
+                        <h4 class="card-title" th:text="#{searchresults.noResults}"></h4>
+                        <p><a href="http://localhost:8080/search?keyword=&flatType=&town=&leaseRemaining=&minPrice=&maxPrice=">Show all listings</a></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function jsResetForm(){
+        
+            document.getElementById("textField").value = ""
+            document.getElementById("filterField1").value = "";
+            document.getElementById("filterField2").value = "";
+            document.getElementById("filterField3").value = "";
+            document.getElementById("filterField4").value = "";
+            document.getElementById("filterField5").value = "";
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- For input stylesheet -->
+    <!-- Using bootstrap 4.3.1 -->
+    <link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+    <link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodicty - My Favourite</title>
+</head>
+
+<body>
+    <!-- Menu section -->
+    <div th:replace="fragments/layout :: headermenu"></div>
+    <br>
+    <div class="container cardContainer">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="card-header-alt"><span class="fa fa-heart fa-sel"></span> Favourites</h3>
+                <br/>
+                <div th:replace="fragments/layout :: pagingMenu"></div>
+                
+                <div class="card" th:if="${not #lists.isEmpty(monitorList)}" th:each="item:${monitorList}">
+                    
+                    <div class="card-body row">
+                        <div class="col-md-4">
+                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                <img th:if="${#lists.isEmpty(item.property.propertyImages)}"
+                                    th:src="@{/homeimages/noimagefound.jpg}" class="card-img-top" />
+                                <img th:if="${not #lists.isEmpty(item.property.propertyImages)}"
+                                    th:src="@{/{imglink}(imglink=${item.property.getMainImgPath()})}" class="card-img-top" />
+                                <a href="#!">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title" th:text="${item.property.propertyName}"></h4>
+                                <h5 class="card-title" th:text="${item.property.getFullAddress()}"></h5>
+                                <h6 th:text="${#numbers.formatCurrency(item.property.price)}"></h6>
+                                <br/>
+                                <a th:href="@{/viewproperty/getprop/{id}(id=${item.property.propertyId})}"
+                                    class="btn btn-secondary btn-propety">View</a>
+                                <a href="EditProduct.html" th:href="@{/property/favourite-properties/remove/}+${item.property.propertyId}"
+                                    class="btn btn-secondary btn-propety">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" th:if="${#lists.isEmpty(monitorList)}">
+                    <div class="card-body">
+                        <h5 class="card-title">No Favourite Property</h5>
+                        <br/>
+                        <a th:href="@{/search}"
+                                    class="btn btn-secondary btn-propety">Find Now!</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+</body>
+
+</html>

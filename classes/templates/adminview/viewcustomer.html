@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bootstrap Admin</title>
+	<link rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+	<link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.min.css} " />
+	<link th:rel="stylesheet" th:href="@{/css/home.css} " />
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<div class="row g-0">
+			<!-- Wrapper -->
+
+			<nav th:replace="fragments/layoutadmin :: leftmenu"></nav>
+
+			<main class="col-10 bg-light pl-0 pr-0">
+				<!-- Main (Top Nav & Content) -->
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col">
+							<div class="container">
+								<br />
+								<h2 class="card-header-alt">List of Customers</h2>
+								<br />
+								<div th:replace="fragments/layout :: pagingMenu"></div>
+								<br />
+								<p th:if="${#lists.isEmpty(monitorList)}">No Customer Found</p>
+								<table th:if="${not #lists.isEmpty(monitorList)}"class="table">
+									<thead>
+										<tr>
+											<th scope="col" th:text=#{admin.customerview.list.username}></th>
+											<th scope="col" th:text=#{admin.customerview.list.firstname}></th>
+											<th scope="col" th:text=#{admin.customerview.list.lastname}></th>
+											<th scope="col" th:text=#{admin.customerview.list.phone}></th>
+											<th scope="col" th:text=#{admin.customerview.list.datecreate}></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="user:${monitorList}">
+											<th scope="row" th:text=${user.username}></th>
+											<td th:text=${user.firstName}></td>
+											<td th:text=${user.lastName}></td>
+											<td th:text=${user.phone}></td>
+											<td th:text=${user.dateCreate}></td>
+											
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+			</main>
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>

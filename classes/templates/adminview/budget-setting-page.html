@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bootstrap Admin</title>
+	<link rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+	<link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.min.css} " />
+	<link th:rel="stylesheet" th:href="@{/css/budgetform.css} " />
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row g-0">
+			<!-- Wrapper -->
+
+			<nav th:replace="fragments/layoutadmin :: leftmenu"></nav>
+
+			<main class="col-10 bg-light pl-0 pr-0">
+				<!-- Main (Top Nav & Content) -->
+
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col">
+						<div class="container">
+							<br/>
+							<h2 class="card-header-alt">Budget Calculator Setting</h2>
+							<br />
+
+							<div th:if="${budgetedit == null or not budgetedit}">
+								<!-- Viewing of Budget Calculator Setting -->
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculatorSetting.label.maxHDBloan}">Max Loan % From HDB:</label>
+									<div class="col-sm-9">
+										<span th:text="${budgetSetting.maxHDBLoan}"></span>
+									</div>
+									
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculatorSetting.label.maxBankloan}">Max Loan % From Bank:</label>
+									<div class="col-sm-9">
+										<span th:text="${budgetSetting.maxBankLoan}"></span>
+									</div>
+									
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculatorSetting.label.cpfRate}">Prevailing CPF Interest
+										Rate:</label>
+									<div class="col-sm-9">
+										<span th:text="${budgetSetting.cpfInterest}"></span> %
+									</div>
+									
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculatorSetting.label.hdbAdditionalInt}">HDB Additional Interest(over
+										CPF):</label>
+									<div class="col-sm-9">
+										<span th:text="${budgetSetting.hdbInterestAboveCPF}"></span> %
+									</div>
+									
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt" th:text="#{budgetCalculatorSetting.label.maxLoanDuration}">Max Loan Duration:</label>
+									<div class="col-sm-9">
+										<span th:text="${budgetSetting.maxloanDurationMonth}"></span> months
+									</div>
+									
+								</div>
+								<br />
+								<a th:href="@{/admin/datasetting/editbudgetinfo}"><button type="button"
+										class="btn btn-secondary">Edit</button></a>
+							</div>
+						</div>
+
+
+						
+						<div th:if="${budgetedit == true}">
+							<form th:object="${budgetinfo}" th:action="@{/admin/datasetting/savebudgetinfo}"
+								method="post">
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt">Max Loan % From HDB:</label>
+									<div class="col-sm-9">
+										<input class="budget-input-text-st" type="number"
+											th:field="*{maxHDBLoan}" min="0" step="0.01" /> %
+										<p class="form-err" th:if="${#fields.hasErrors('maxHDBLoan')}"
+								th:errors="*{maxHDBLoan}"></p>
+									</div>
+									
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt">Max Loan % From Bank:</label>
+									<div class="col-sm-9">
+										<input class="budget-input-text-st" type="number"
+											th:field="*{maxBankLoan}" min="0" step="0.01" /> %
+										<p class="form-err" th:if="${#fields.hasErrors('maxBankLoan')}"
+								th:errors="*{maxBankLoan}"></p>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt">Praviling CPF Interest Rate:</label>
+									<div class="col-sm-9">
+										<input class="budget-input-text-st" type="number"
+											th:field="*{cpfInterest}"  min="0" step="0.01" /> %
+										<p class="form-err" th:if="${#fields.hasErrors('cpfInterest')}"
+								th:errors="*{cpfInterest}"></p>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt">HDB Additional Interest(over CPF):</label>
+									<div class="col-sm-9">
+										<input class="budget-input-text-st" type="number"
+											th:field="*{hdbInterestAboveCPF}" min="0" step="0.01"  /> %
+										<p class="form-err" th:if="${#fields.hasErrors('hdbInterestAboveCPF')}"
+								th:errors="*{hdbInterestAboveCPF}"></p>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label label-alt">Max Loan Duration:</label>
+									<div class="col-sm-9">
+										<input class="budget-input-text-st" type="number"
+											th:field="*{maxloanDurationMonth}" min="0" step="1" /> months
+										<p class="form-err" th:if="${#fields.hasErrors('maxloanDurationMonth')}"
+								th:errors="*{maxloanDurationMonth}"></p>
+									</div>
+								</div>
+								<br/>
+								<button type="Submit" class="btn btn-secondary">Save</button>
+								<a th:href="@{/admin/datasetting/budgetdata}"><button type="button"
+										class="btn btn-secondary">Cancel</button></a>
+							</form>
+						</div>
+						
+						</div>
+					</div>
+				</div>
+
+			</main>
+		</div> <!-- Wrapper -->
+
+	</div>
+</body>
+
+</html>

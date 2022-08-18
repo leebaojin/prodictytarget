@@ -1,0 +1,120 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- For input stylesheet -->
+	<!-- Using bootstrap 4.3.1 -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/general.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Prodicty - Price Predict</title>
+</head>
+
+<body>
+	<!-- Menu section -->
+	<div th:replace="fragments/layout :: headermenu"></div>
+	<br>
+	<div class="container cardContainer">
+		<div class="row">
+			<div class="col-sm-12">
+				<h3 class="card-header-alt">Price Prediction</h3>
+				</br>
+				<div class="slidecontainer">
+					<p>Floor Area: <span id="floorAreaText">1</span> m<sup>2<sup></p>
+					<input type="range" min="1" max="200" value="1" class="slider" id="floorAreaSlide">
+				</div>
+				<br />
+				<div id="chartContainer" style="height: 370px; width: 100%;max-width:500px"></div>
+			
+				<br/>
+				<p>*Price shown is the average selling price /m<sup>2</sup> for that month</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<footer>
+	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+
+		window.onload = function () {
+
+			var rawData = /*[[${plotdata}]]*/[];
+			var dataPoints = [];
+
+			var chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
+				zoomEnabled: true,
+				title: {
+					text: "Average Historical Price"
+				},
+				axisX: {
+					gridThickness: 0,
+					crosshair: {
+						enabled: true,
+						snapToDataPoint: true,
+						valueFormatString: "DD MMM"
+					}
+				},
+				axisY: {
+					title: "Average Price of Transaction SGD",
+					gridThickness: 0,
+					crosshair: {
+						enabled: true,
+						snapToDataPoint: true,
+						valueFormatString: "$#,##0"
+					}
+				},
+				data: [{
+					type: "line",
+					name: "Previous",
+					xValueFormatString: "DD MMM",
+					yValueFormatString: "$#,##0.00",
+					xValueType: "dateTime",
+					dataPoints: dataPoints
+				}]
+			});
+
+			function addData(data, datapt) {
+				for (var i = 0; i < data.length; i++) {
+					datapt.push({
+						x: new Date(data[i].date),
+						y: data[i].price_per_sq_m
+					});
+				}
+				chart.render();
+			}
+
+
+			addData(rawData, dataPoints);
+			
+			var slider = document.getElementById("floorAreaSlide");
+			var textchange = document.getElementById("floorAreaText");
+			slider.oninput = function () {
+				textchange.innerHTML = this.value;
+				multiplydata(rawData, dataPoints, this.value);
+				
+			}
+			
+			function multiplydata(data, datapt, multiplier){
+				for(let i=0; i<data.length; i++){
+					datapt[i].y = data[i].price_per_sq_m * multiplier;
+				}
+				chart.render();
+			}
+
+		}
+
+
+
+		/*]]>*/
+	</script>
+</footer>
+
+</html>

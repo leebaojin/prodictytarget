@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Dashboard</title>
+	<link rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css}">
+	<link th:rel="stylesheet" th:href="@{/external/fontawesome/css/all.min.css} " />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row g-0">
+			<!-- Wrapper -->
+
+			<nav th:replace="fragments/layoutadmin :: leftmenu"></nav>
+
+			<main class="col-10 bg-secondary pl-0 pr-0">
+				<!-- Main (Top Nav & Content) -->
+
+				<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
+					<div class="flex-fill"></div>
+					<div class="navbar nav">
+					</div>
+				</nav>
+
+				<div class="container-fluid mt-3 p-4">
+					<!-- Content -->
+
+
+					<div class="row flex-column flex-lg-row">
+
+						<div class="col-6">
+							<h2 class="h6 text-white-50">Visitors Stats</h2>
+							<div class="row">
+								<div class="col">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h3 class="card-title h2"><span th:text="${today}"></span></h3>
+											<span class="text-success">
+												<i class="fas fa-chart-line"></i>
+												Today visitors
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h3 class="card-title h2"><span th:text="${yesterday}"></span></h3>
+											<span class="text-success">
+												<i class="fas fa-chart-line"></i>
+												Yesterday visitors
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h3 class="card-title h2"><span th:text="${monthlyavg}"></span></h3>
+											<span class="text-success">
+												<i class="fas fa-chart-line"></i>
+												Monthly average visitors
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h3 class="card-title h2"><span th:text="${yearlyavg}"></span></h3>
+											<span class="text-success">
+												<i class="fas fa-chart-line"></i>
+												Yearly average visitors
+											</span>
+										</div>
+									</div>
+								</div>
+							</div> <!-- Content Row 1 -->
+
+						</div>
+						<div class="col-6">
+							<h2 class="h6 text-white-50">Property Activity</h2>
+							<canvas id="myChart3" style="width:100%;max-width:600px;background-color:white"></canvas>
+						</div>
+					</div>
+
+					<div class="row mt-4 flex-column flex-lg-row">
+						<div class="col-6">
+							<h2 class="h6 text-white-50">Previous Five Days Usage</h2>
+							<canvas id="myChart" style="width:100%;max-width:600px;background-color:white"></canvas>
+						</div>
+						<div class="col-6">
+							<h2 class="h6 text-white-50">Price Trend</h2>
+							<canvas id="myChart2" style="width:100%;max-width:600px;background-color:white"></canvas>
+						</div>
+					</div> <!-- Content Row 2 -->
+
+				</div> <!-- Content -->
+
+			</main> <!-- Main (Nav & Content) -->
+
+		</div> <!-- Wrapper -->
+
+		<footer class="text-center py-4 text-muted">
+			&copy; Copyright 2022
+		</footer>
+	</div>
+
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var xValues = /*[[${lastFiveDaysUsage.keySet()}]]*/[];
+		var yValues = /*[[${lastFiveDaysUsage.values()}]]*/[];
+
+		new Chart("myChart", {
+			type: "bar",
+			data: {
+				labels: xValues,
+				datasets: [{
+					data: yValues,
+					backgroundColor: 'rgba(255, 99, 88, 0.6)'
+				}]
+			},
+			options: {
+				legend: {display: false},
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 0
+						}
+					}]
+				}
+			}
+		});
+
+		var xValues2 = /*[[${priceTrendDates}]]*/[];
+		var yValues2 = /*[[${priceTrendPrices}]]*/[];
+
+		new Chart("myChart2", {
+			type: "line",
+			data: {
+				labels: xValues2,
+				datasets: [{
+					data: yValues2,
+					borderColor: "#00aba9"
+				}]
+			},
+			options: {legend: {display: false}}
+		});
+
+
+		var xValues3 = /*[[${pastFiveDays}]]*/[];
+
+		new Chart("myChart3", {
+			type: "line",
+			data: {
+				labels: xValues3,
+				datasets: [{
+					label: "Created Properties",
+					data: /*[[${createdTrackers.values()}]]*/[],
+					borderColor: "green",
+					fill: false
+				}, {
+					label: "Deleted Properties",
+					data: /*[[${deletedTrackers.values()}]]*/[],
+					borderColor: "red",
+					fill: false
+				}]
+			},
+			options: {
+				legend: {display: true},
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 0,
+							stepSize: 1
+						}
+					}]
+				}
+			}
+		});
+
+		/*]]>*/
+
+	</script>
+</body>
+
+</html>

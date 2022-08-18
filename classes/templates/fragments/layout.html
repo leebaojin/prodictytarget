@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head th:fragment="headsection">
+	<title>Prodicty</title>
+	<!-- For input stylesheet -->
+	<!-- Using bootstrap 4.3.1 -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+</head>
+
+
+<body>
+
+	<div th:fragment="backgroundimg" class="bannerContainer">
+		<div th:fragment="backgroundimg" class="bannerBackground"></div>
+		<img th:src="@{/homepageimages/homepagebanner.jpg}" alt="homepagebanner_img"
+			style="width: 100%; height: 100%; object-fit: cover;" />
+	</div>
+
+
+	<div th:fragment="headermenu">
+		<!--Quick hack to load required scripts for bootstrap animations.-->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+			integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+			crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+			crossorigin="anonymous"></script>
+		<!--End hacked section-->
+		<nav class="navbar navbar-expand-lg navbar-light bg-light firstmenu">
+			<a class="navbar-brand" th:href="@{/home}">Prodicty</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+				aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse " id="navbarNavDropdown">
+			
+				<ul th:if="${navBarData != null and #strings.equals(navBarData.role, 'CUSTOMER')}" class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/home}">Home</a>
+
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" th:href="@{/search}">Property</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" th:href="@{/property/list-properties}">My Property</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/search}">Search Property</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/property/create-property}">Add Property</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" th:href="@{/home}">Others</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" th:href="@{/home/news}">News</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/home/pricepredict}">Price Trend</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/home/budget/param}">Affordibility</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/property/favourite-properties/list}">Favourites</a>
+
+					</li>
+
+				</ul>
+				
+				<ul th:if="${navBarData != null and #strings.equals(navBarData.role, 'ADMIN')}" class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/home}">Home</a>
+
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" th:href="@{/search}">Property</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" th:href="@{/search}">Search Property</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" th:href="@{/home}">Others</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" th:href="@{/home/news}">News</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/home/pricepredict}">Price Trend</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/home/budget/param}">Affordibility</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/admin}">Admin</a>
+
+					</li>
+
+				</ul>
+				
+				
+				<ul th:if="${navBarData == null}" class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/home}">Home</a>
+
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" th:href="@{/search}">Property</a>
+						<ul class="dropdown-menu">
+
+							<li>
+								<a class="dropdown-item" th:href="@{/search}">Search Property</a>
+							</li>
+
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" th:href="@{/home}">Others</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" th:href="@{/home/news}">News</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/home/pricepredict}">Price Trend</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/home/budget/param}">Affordability</a>
+							</li>
+						</ul>
+					</li>
+
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown" th:if="${navBarData != null}">
+						Welcome,&nbsp
+						<em th:utext="${navBarData.name}"></em>&nbsp
+						<span th:if="${not #strings.equals(navBarData.role, 'CUSTOMER')}">[<em
+								th:utext=${navBarData.role}></em>]</span>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" th:if="${#strings.equals(navBarData.role, 'CUSTOMER')}" th:href="@{/user/profile}">My Account</a>
+							</li>
+							<li>
+								<a class="dropdown-item" th:href="@{/logout}">Logout</a>
+							</li>
+						</ul>
+
+					</li>
+					<li>&nbsp</li>
+					<li class="nav-item" th:if="${navBarData == null}">
+
+						<a class="nav-link" th:href="@{/login}">Login</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+
+	</div>
+	
+	
+	
+		<div th:fragment="pagingMenu" class="card card-no-border" th:if="${lastEntry > 0 and totalPages > 1}">
+			<div class="card-body row">
+				<div class="col-md-4">
+					<form th:action="@{/{dir}(dir=${navDirectory})}" method="get">
+						<a th:if="${currentPage>1}"
+							th:href="@{/{dir}(dir=${navDirectory},pageNo=${currentPage-1})}"><span
+								class="arrow left"></span></a>&nbsp;
+						<input class="pageBox" type="text" name="pageNo" th:value="${currentPage}" />&nbsp;
+						<a th:if="${currentPage<totalPages}"
+							th:href="@{/{dir}(dir=${navDirectory},pageNo=${currentPage+1})}"><span
+								class="arrow right"></span></a> &nbsp;&nbsp; of <span th:text="${totalPages}"></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="pageResult">(Result <span th:text="${firstEntry}"></span> - <span
+								th:text="${lastEntry}"></span> of <span th:text="${totalItems}"></span>)</span>
+					</form>
+				</div>
+			</div>
+		</div>
+	
+
+	<footer class="text-center py-4 text-muted" th:fragment="footersection">
+
+	</footer>
+
+</body>
+
+</html>
