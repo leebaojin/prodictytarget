@@ -1,74 +1,87 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- For input stylesheet -->
-    <!-- Using bootstrap 4.3.1 -->
-    <link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
-    <link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css" />
-    <script type="text/javascript" th:src="@{/scripts/confirmMsg.js}" ></script> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prodicty - My Property</title>
+	<!-- For input stylesheet -->
+	<!-- Using bootstrap 4.3.1 -->
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css" />
+	<script type="text/javascript" th:src="@{/scripts/confirmMsg.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Prodicty - My Property</title>
 </head>
 
 <body>
-    <!-- <div class="bannerContainer">
+	<!-- <div class="bannerContainer">
 		<div class="bannerBackground"></div>
 		<img th:src="@{/homeimages/homepagebanner.jpg}" alt="homepagebanner_img"
 			style="width: 100%; height: 100%; object-fit: cover;" />
 	</div> -->
-    <!-- Menu section -->
-    <div th:replace="fragments/layout :: headermenu"></div>
-    <br>
-    <div class="container cardContainer">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3 class="card-header-alt">My Property Listings</h3>
-                <br/>
-                <div class="card" th:each="property:${propertyList}">
-                    <div class="card-body row">
-                        <div class="col-md-4">
-                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                                <img th:if="${#lists.isEmpty(property.propertyImages)}"
-                                    th:src="@{/homeimages/noimagefound.jpg}" class="card-img-top" />
-                                <img th:if="${not #lists.isEmpty(property.propertyImages)}"
-                                    th:src="@{/{imglink}(imglink=${property.getMainImgPath()})}" class="card-img-top" />
-                                <a href="#!">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title" th:text="${property.propertyName}"></h4>
-                                <h5 class="card-title" th:text="${property.getFullAddress()}"></h5>
-                                <!-- <h6 th:text="${#numbers.formatCurrency(property.price)}"></h6> -->
-                                <h6>$<span th:text="${#numbers.formatDecimal(property.price, 0, 'COMMA', 2, 'POINT')}"></span></h6>
-                                <br/>
-                                <a th:href="@{/viewproperty/getprop/{id}(id=${property.propertyId})}"
-                                    class="btn btn-secondary btn-propety">View</a>
-                                <a href="EditProduct.html" th:href="@{/property/edit-property/}+${property.propertyId}"
-                                    class="btn btn-secondary btn-propety">Edit</a>
-                                <button  href="#" th:attr="onclick=|confirmPropertyDelete('${property.propertyName}','/property/delete-property/${property.propertyId}')|"
-                                    class="btn btn-secondary btn-propety">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" th:if="${#lists.isEmpty(propertyList)}">
-                    <div class="card-body">
-                        <h5 class="card-title">You have not listed any properties for sale.</h5>
-                        <br/>
-                        <a th:href="@{/property/create-property}"
-                                    class="btn btn-secondary btn-propety">List one now!</a>
-                    </div>
-                </div>
-            </div>
+	<!-- Menu section -->
+	<div th:replace="fragments/layout :: headermenu"></div>
+	<br>
+	<div class="container cardContainer">
+		<div class="row">
+			<div class="col-sm-12">
+				<h3 class="card-header-alt">My Property Listings</h3>
+				<br />
+				<div class="card" th:each="property:${propertyList}">
+					<div class="card-body row">
+						<div class="col-md-4">
+							<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+								<img th:if="${#lists.isEmpty(property.propertyImages)}"
+									th:src="@{/homeimages/noimagefound.jpg}" class="card-img-top" />
+								<img th:if="${not #lists.isEmpty(property.propertyImages)}"
+									th:src="@{/{imglink}(imglink=${property.getMainImgPath()})}" class="card-img-top" />
+								<a href="#!">
+									<div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h4 class="card-title" th:text="${property.propertyName}"></h4>
+								<h5 class="card-title" th:text="${property.getFullAddress()}"></h5>
+								<!-- <h6 th:text="${#numbers.formatCurrency(property.price)}"></h6> -->
+								<h6>$<span
+										th:text="${#numbers.formatDecimal(property.price, 0, 'COMMA', 2, 'POINT')}"></span>
+								</h6>
+								<br />
+								<a th:href="@{/viewproperty/getprop/{id}(id=${property.propertyId})}"
+									class="btn btn-secondary btn-propety">View</a>
+								<a href="EditProduct.html" th:href="@{/property/edit-property/}+${property.propertyId}"
+									class="btn btn-secondary btn-propety">Edit</a>
+								<button href="#"
+									th:attr="onclick=|confirmPropertyDelete('${property.propertyName}','/property/delete-property/${property.propertyId}')|"
+									class="btn btn-secondary btn-propety">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card" th:if="${#lists.isEmpty(propertyList)}">
+					<div class="card-body">
+						<h5 class="card-title">You have not listed any properties for sale.</h5>
+						<br />
+						<a th:href="@{/property/create-property}" class="btn btn-secondary btn-propety">List one
+							now!</a>
+					</div>
+				</div>
+			</div>
 
-        </div>
-    </div>
+		</div>
+		<br />
+		<br />
 
-    
+		<div class="row" th:if="${not #lists.isEmpty(propertyList)}">
+			<br />
+			<div class="col">
+				<div class="scroll-top" onclick="window.scrollTo(0,0);">Back to top</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+
 </body>
 
 </html>

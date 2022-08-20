@@ -230,3 +230,14 @@ body{
 .likeAndShare{
 	font-size:22px;
 }
+.scroll-top{
+	color:blue;
+}
+.scroll-top:hover{
+	cursor:pointer;
+	color:#00B0F0;
+}
+
+.back-container{
+	margin-left:13%;
+}

@@ -238,11 +238,11 @@
 		<br />
 		<div>
 			<div class="subheader">
-				Price Prediction & Trends
+				Price Prediction
 			</div>
 		</div>
 
-		<span>
+
 			<div class="container property-info">
 				<div class="row">
 					<div class="col-2 property-prompt">
@@ -271,6 +271,20 @@
 		<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
 	</div>
+	
+	<br />
+	<br />
+	<br />	<div class="container back-container">
+		 <div class="row">
+        	
+		<div class="col">
+				<div class="scroll-top" onclick="window.scrollTo(0,0);">Back to top</div>
+		</div>
+        </div>
+	</div>
+	<br/>
+	<br/>
+	
 
 
 </body>
@@ -306,7 +320,7 @@
 			animationEnabled: true,
 			zoomEnabled: true,
 			title: {
-				text: "Property Price Trend"
+				text: "Property Price Prediction"
 			},
 			axisX: {
 				gridThickness: 0,
@@ -327,14 +341,14 @@
 			},
 			data: [{
 				type: "line",
-				name: "Previous",
+				name: "Previous Est",
 				xValueFormatString: "DD MMM",
 				yValueFormatString: "$#,##0.00",
 				xValueType: "dateTime",
 				dataPoints: dataPoints
 			}, {
 				type: "line",
-				name: "Future",
+				name: "Future Est",
 				xValueFormatString: "DD MMM",
 				yValueFormatString: "$#,##0.00",
 				xValueType: "dateTime",
