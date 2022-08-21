@@ -4,121 +4,103 @@
 
 <body>
 
-	<nav th:fragment="leftmenu" class="col-2 bg-light pr-3 border-right"> <!-- Left Side Nav -->
+	<nav th:fragment="leftmenu" class="col-2 bg-light pr-3 border-right">
+		<!-- Left Side Nav -->
 
-				<h1 class="h4 py-3 text-center text-primary">
-					<span class="d-none d-lg-inline">Prodicty</span>
-				</h1>
-				
-				<div class="list-group text-center text-lg-left">
-					<span class="list-group-item disabled d-none d-lg-block">
-						<small>CONTROLS</small>
-					</span>
-					<a th:href="@{/admin}" class="list-group-item list-group-item-action"  th:classappend="${active==0?'active':''}">
-						<i class="fas fa-chart-line"></i>
-						<span class="d-none d-lg-inline">Dashboard</span>
-					</a>
-					<a th:href="@{/admin/datasetting/budgetdata}" class="list-group-item list-group-item-action" th:classappend="${active==1?'active':''}">
-						<i class="fa fa-calculator"></i>
-						<span class="d-none d-lg-inline">Budget Calculator Setting</span>
-						<!--<span class="d-none d-lg-inline badge bg-danger rounded-pill float-right">20</span>-->
-					</a>
-					<a th:href="@{/admin/viewCustomers}" class="list-group-item list-group-item-action" th:classappend="${active==2?'active':''}">
-						<i class="fa fa-users"></i>
-						<span class="d-none d-lg-inline">Customer List</span>
-						<!--<span class="d-none d-lg-inline badge bg-danger rounded-pill float-right">20</span>-->
-					</a>
-					<a th:href="@{/home}" class="list-group-item list-group-item-action" th:classappend="${active==3?'active':''}">
-						<i class="fas fa-home"></i>
-						<span class="d-none d-lg-inline">Prodicty Home</span>
-					</a>
-					<a th:href="@{/home/news}" class="list-group-item list-group-item-action" th:classappend="${active==4?'active':''}">
-						<i class="fas fa-newspaper"></i>
-						<span class="d-none d-lg-inline">News</span>
-					</a>
-					<a th:href="@{/logout}" class="list-group-item list-group-item-action" th:classappend="${active==5?'active':''}">
-						<i class="fas fa-sign-out-alt"></i>
-						<span class="d-none d-lg-inline">Logout</span>
-					</a>
-				</div>
+		<h1 class="h4 py-3 text-center text-primary">
+			<span class="d-none d-lg-inline">Prodicty</span>
+		</h1>
 
-				<div class="list-group mt-4 text-center text-lg-left">
-					<span class="list-group-item disabled d-none d-lg-block">
-						<small>UPDATES</small>
-					</span>
-					<a  target="popup" class="list-group-item list-group-item-action"
-					th:attr="onclick=|window.open('${priceUpdateLink}','Update Price','width=350,height=350')|" >
-						<i class="fas fa-sync-alt"></i>
-						<span class="d-none d-lg-inline">Update Price</span>
-					</a>
-					<a  target="popup" class="list-group-item list-group-item-action"
-					th:attr="onclick=|window.open('${newsUpdateLink}','Update Price','width=350,height=350')|">
-						<i class="fas fa-sync-alt"></i>
-						<span class="d-none d-lg-inline">Update News</span>
-					</a>
-					<a  target="popup" class="list-group-item list-group-item-action"
-					th:attr="onclick=|window.open('${newsFirstUpdateLink}','Update Price','width=350,height=350')|">
-						<i class="fas fa-sync-alt"></i>
-						<span class="d-none d-lg-inline">Initialize News</span>
-					</a>
-				</div>
+		<div class="list-group text-center text-lg-left">
+			<span class="list-group-item disabled d-none d-lg-block">
+				<small>CONTROLS</small>
+			</span>
+			<a th:href="@{/admin}" class="list-group-item list-group-item-action"
+				th:classappend="${active==0?'active':''}">
+				<i class="fas fa-chart-line"></i>
+				<span class="d-none d-lg-inline">Dashboard</span>
+			</a>
+			<a th:href="@{/admin/datasetting/budgetdata}" class="list-group-item list-group-item-action"
+				th:classappend="${active==1?'active':''}">
+				<i class="fa fa-calculator"></i>
+				<span class="d-none d-lg-inline">Budget Calculator Setting</span>
+				<!--<span class="d-none d-lg-inline badge bg-danger rounded-pill float-right">20</span>-->
+			</a>
+			<a th:href="@{/admin/viewCustomers}" class="list-group-item list-group-item-action"
+				th:classappend="${active==2?'active':''}">
+				<i class="fa fa-users"></i>
+				<span class="d-none d-lg-inline">Customer List</span>
+				<!--<span class="d-none d-lg-inline badge bg-danger rounded-pill float-right">20</span>-->
+			</a>
+			<a th:href="@{/home}" class="list-group-item list-group-item-action"
+				th:classappend="${active==3?'active':''}">
+				<i class="fas fa-home"></i>
+				<span class="d-none d-lg-inline">Prodicty Home</span>
+			</a>
+			<a th:href="@{/home/news}" class="list-group-item list-group-item-action"
+				th:classappend="${active==4?'active':''}">
+				<i class="fas fa-newspaper"></i>
+				<span class="d-none d-lg-inline">News</span>
+			</a>
+			<a th:href="@{/logout}" class="list-group-item list-group-item-action"
+				th:classappend="${active==5?'active':''}">
+				<i class="fas fa-sign-out-alt"></i>
+				<span class="d-none d-lg-inline">Logout</span>
+			</a>
+		</div>
 
-			</nav> <!-- Left Side Nav -->
-			
-			<nav class="col-2 bg-light pr-3 border-right">
-				<!-- Left Side Nav -->
+		<div class="list-group mt-4 text-center text-lg-left">
+			<span class="list-group-item disabled d-none d-lg-block">
+				<small>UPDATES</small>
+			</span>
+			<a target="popup" class="list-group-item list-group-item-action"
+				th:attr="onclick=|window.open('${priceUpdateLink}','Update Price','width=350,height=350')|">
+				<i class="fas fa-sync-alt"></i>
+				<span class="d-none d-lg-inline">Update Price</span>
+			</a>
+			<a target="popup" class="list-group-item list-group-item-action"
+				th:attr="onclick=|window.open('${newsUpdateLink}','Update Price','width=350,height=350')|">
+				<i class="fas fa-sync-alt"></i>
+				<span class="d-none d-lg-inline">Update News</span>
+			</a>
+			<a target="popup" class="list-group-item list-group-item-action"
+				th:attr="onclick=|window.open('${newsFirstUpdateLink}','Update Price','width=350,height=350')|">
+				<i class="fas fa-sync-alt"></i>
+				<span class="d-none d-lg-inline">Initialize News</span>
+			</a>
+		</div>
 
-				<h1 class="h4 py-3 text-center text-primary">
-					<span class="d-none d-lg-inline">Prodicty</span>
-				</h1>
+	</nav> <!-- Left Side Nav -->
 
-				<div class="list-group text-center text-lg-left">
-					<span class="list-group-item disabled d-none d-lg-block">
-						<small>CONTROLS</small>
-					</span>
-					<a th:href="@{/admin}" class="list-group-item list-group-item-action active">
-						<i class="fas fa-home"></i>
-						<span class="d-none d-lg-inline">Dashboard</span>
-					</a>
-					<a th:href="@{/admin/datasetting/budgetdata}" class="list-group-item list-group-item-action">
-						<i class="fas fa-users"></i>
-						<span class="d-none d-lg-inline">Budget Calculator Setting</span>
-						<!--<span class="d-none d-lg-inline badge bg-danger rounded-pill float-right">20</span>-->
-					</a>
-					<a th:href="@{/home}" class="list-group-item list-group-item-action">
-						<i class="fas fa-chart-line"></i>
-						<span class="d-none d-lg-inline">Prodicty Home</span>
-					</a>
-					<a th:href="@{/logout}" class="list-group-item list-group-item-action">
-						<i class="fas fa-flag"></i>
-						<span class="d-none d-lg-inline">Logout</span>
-					</a>
-				</div>
-				
-				<!-- Not used 
-				<div class="list-group mt-4 text-center text-lg-left">
-					<span class="list-group-item disabled d-none d-lg-block">
-						<small>UPDATES</small>
-					</span>
-					<a th:href="${priceUpdateLink}" target="popup" class="list-group-item list-group-item-action"
-						th:attr="onclick=|window.open('${priceUpdateLink}','Update Price','width=350,height=350')|">
-						<i class="fas fa-user"></i>
-						<span class="d-none d-lg-inline">Update Price</span>
-					</a>
-					<a th:href="${newsUpdateLink}" target="popup" class="list-group-item list-group-item-action"
-						th:attr="onclick=|window.open('${newsUpdateLink}','Update Price','width=350,height=350')|">
-						<i class="fas fa-edit"></i>
-						<span class="d-none d-lg-inline">Update News</span>
-					</a>
-					<a href="${newsFirstUpdateLink}" target="popup" class="list-group-item list-group-item-action"
-					th:attr="onclick=|window.open('${newsFirstUpdateLink}','Update Price','width=350,height=350')|">
-						<i class="fas fa-sync-alt"></i>
-						<span class="d-none d-lg-inline">Initialize News</span>
-					</a>
-				</div>
+	<nav class="col-2 bg-light pr-3 border-right">
+		<!-- Left Side Nav -->
 
-			</nav> 
-			-->
+		<h1 class="h4 py-3 text-center text-primary">
+			<span class="d-none d-lg-inline">Prodicty</span>
+		</h1>
+
+		<div class="list-group text-center text-lg-left">
+			<span class="list-group-item disabled d-none d-lg-block">
+				<small>CONTROLS</small>
+			</span>
+			<a th:href="@{/admin}" class="list-group-item list-group-item-action active">
+				<i class="fas fa-home"></i>
+				<span class="d-none d-lg-inline">Dashboard</span>
+			</a>
+			<a th:href="@{/admin/datasetting/budgetdata}" class="list-group-item list-group-item-action">
+				<i class="fas fa-users"></i>
+				<span class="d-none d-lg-inline">Budget Calculator Setting</span>
+				<!--<span class="d-none d-lg-inline badge bg-danger rounded-pill float-right">20</span>-->
+			</a>
+			<a th:href="@{/home}" class="list-group-item list-group-item-action">
+				<i class="fas fa-chart-line"></i>
+				<span class="d-none d-lg-inline">Prodicty Home</span>
+			</a>
+			<a th:href="@{/logout}" class="list-group-item list-group-item-action">
+				<i class="fas fa-flag"></i>
+				<span class="d-none d-lg-inline">Logout</span>
+			</a>
+		</div>
 
 </body>
 

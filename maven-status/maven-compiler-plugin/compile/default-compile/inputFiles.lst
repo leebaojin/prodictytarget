@@ -19,6 +19,7 @@ C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\ServiceExternal
 C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\repo\RoleRepository.java
 C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\repo\UserRepository.java
 C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\controllerAPI\PropertyAPIController.java
+C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\controllerAPI\FavouriteApiController.java
 C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\repo\VisitorRepo.java
 C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\modelSupport\GeoCoordinate.java
 C:\Users\leeba\src\prodictyapp\src\main\java\sg\edu\iss\prodicty\exception\StoreyUnitMismatchException.java

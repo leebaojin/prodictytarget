@@ -13,11 +13,6 @@
 </head>
 
 <body>
-    <!-- <div class="bannerContainer">
-        <div class="bannerBackground"></div>
-        <img th:src="@{homeimages/homepagebanner.jpg}" alt="homepagebanner_img"
-            style="width: 100%; height: 100%; object-fit: cover;" />
-    </div> -->
     <!-- Menu section -->
     <div th:replace="fragments/layout :: headermenu"></div>
     <br>
@@ -87,8 +82,6 @@
             </div>
         </form>
         <button  class="btn btn-outline-secondary" onClick="jsResetForm();">Reset Form</button>
-        <!-- <a class="btn btn-outline-secondary"
-            href="/search?keyword=&flatType=&town=&minLease=&maxLease=&minPrice=&maxPrice=">Reset Form</a> -->
     </div>
     <br>
     <div class="container cardContainer">
@@ -153,7 +146,7 @@
                 <div class="card" th:if="${#lists.isEmpty(searchResults)}">
                     <div class="card-body">
                         <h4 class="card-title" th:text="#{searchresults.noResults}"></h4>
-                        <p><a href="http://localhost:8080/search?keyword=&flatType=&town=&leaseRemaining=&minPrice=&maxPrice=">Show all listings</a></a></p>
+                        <p><a href="/search?keyword=&flatType=&town=&leaseRemaining=&minPrice=&maxPrice=">Show all listings</a></a></p>
                     </div>
                 </div>
             </div>

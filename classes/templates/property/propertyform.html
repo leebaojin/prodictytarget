@@ -1,238 +1,252 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} "/>
-    <link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css"/>
+	<link th:rel="stylesheet" th:href="@{/external/bootstrap/css/bootstrap.min.css} " />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/navigation-menu.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" href="../static/css/home.css" />
 	<script type="text/javascript" th:src="@{/scripts/home.js}" src="../static/scripts/home.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prodicty - Add Property</title>
+	<title>Prodicty - Add Property</title>
 </head>
 
 <body>
-    <!-- Menu section -->
+	<!-- Menu section -->
 	<div th:replace="fragments/layout :: headermenu"></div>
-    <br>
+	<br>
 	<div class="container">
 		<div class="row">
-            <div class="container">
-			<!-- <div class="col-3"></div> -->
-			<!-- <div class="col-6"> -->
+			<div class="container">
 				<h2 class="card-header-alt">Add Property Listing</h2>
-				<br/>
-				<form th:action="@{/property/{actionurl}(actionurl=${property.propertyId == null? 'create-property':'edit-property/'+property.propertyId})}" method="post" th:object="${property}" enctype="multipart/form-data">
-					<input type="hidden" th:field="*{propertyId}"/>
-					
-	  				<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.propertyName}">Property Name</label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="inputFirstName3" th:field="*{propertyName}">
-      						<p class="form-err" th:if="${#fields.hasErrors('propertyName')}" th:errors="*{propertyName}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.propertyDesc}">Property Description</label>
-    					<div class="col-sm-9">
-    						<textarea class="form-control" id="inputFirstName3" th:field="*{propertyDesc}"></textarea>
-      						<p class="form-err" th:if="${#fields.hasErrors('propertyDesc')}" th:errors="*{propertyDesc}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label for="inputFirstName3" class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.flatType}">Flat Type</label>
-    					<div class="col-sm-9">
-    						<select class="form-control" th:field="*{flatType.flatTypeName}">
-							    <option value="1 ROOM">1 ROOM</option>
-							    <option value="2 ROOM">2 ROOM</option>
-							    <option value="3 ROOM">3 ROOM</option>
-							    <option value="4 ROOM">4 ROOM</option>
-							    <option value="5 ROOM">5 ROOM</option>
-							    <option value="EXECUTIVE">EXECUTIVE</option>
-							    <option value="MULTI-GENERATION">MULTI-GENERATION</option>
+				<br />
+				<form
+					th:action="@{/property/{actionurl}(actionurl=${property.propertyId == null? 'create-property':'edit-property/'+property.propertyId})}"
+					method="post" th:object="${property}" enctype="multipart/form-data">
+					<input type="hidden" th:field="*{propertyId}" />
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.propertyName}">Property Name</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputFirstName3" th:field="*{propertyName}">
+							<p class="form-err" th:if="${#fields.hasErrors('propertyName')}"
+								th:errors="*{propertyName}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.propertyDesc}">Property Description</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" id="inputFirstName3" th:field="*{propertyDesc}"></textarea>
+							<p class="form-err" th:if="${#fields.hasErrors('propertyDesc')}"
+								th:errors="*{propertyDesc}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label for="inputFirstName3" class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.flatType}">Flat Type</label>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="*{flatType.flatTypeName}">
+								<option value="1 ROOM">1 ROOM</option>
+								<option value="2 ROOM">2 ROOM</option>
+								<option value="3 ROOM">3 ROOM</option>
+								<option value="4 ROOM">4 ROOM</option>
+								<option value="5 ROOM">5 ROOM</option>
+								<option value="EXECUTIVE">EXECUTIVE</option>
+								<option value="MULTI-GENERATION">MULTI-GENERATION</option>
 							</select>
-      						<!--<input type="text" class="form-control" id="inputFirstName3" th:field="*{flatType.flatTypeName}">
+							<!--<input type="text" class="form-control" id="inputFirstName3" th:field="*{flatType.flatTypeName}">
       						<p class="form-err" th:if="${#fields.hasErrors('flatType.flatTypeName')}" th:errors="*{flatType.flatTypeName}"></p>-->
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label for="inputFirstName3" class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.flatModel}">Flat Model</label>
-    					<div class="col-sm-9">
-    						<select class="form-control" th:field="*{flatModel.flatModelName}">
-							    <option value="2-room">2-room</option>
-							    <option value="3Gen">3Gen</option>
-							    <option value="Adjoined flat">Adjoined flat</option>
-							    <option value="Apartment">Apartment</option>
-							    <option value="DBSS">DBSS</option>
-							    <option value="Improved">Improved</option>
-							    <option value="Improved-Maisonette">Improved-Maisonette</option>
-							    <option value="Maisonette">Maisonette</option>
-							    <option value="Model A">Model A</option>
-							    <option value="Model A-Maisonette">Model A-Maisonette</option>
-							    <option value="Model A2">Model A2</option>
-							    <option value="Multi Generation">Multi Generation</option>
-							    <option value="New Generation">New Generation</option>
-							    <option value="Premium Apartment">Premium Apartment</option>
-							    <option value="Premium Apartment Loft">Premium Apartment Loft</option>
-							    <option value="Premium Maisonette">Premium Maisonette</option>
-							    <option value="Simplified">Simplified</option>
-							    <option value="Standard">Standard</option>
-							    <option value="Terrace">Terrace</option>
-							    <option value="Type S1">Type S1</option>
-							    <option value="Type S2">Type S2</option>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label for="inputFirstName3" class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.flatModel}">Flat Model</label>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="*{flatModel.flatModelName}">
+								<option value="2-room">2-room</option>
+								<option value="3Gen">3Gen</option>
+								<option value="Adjoined flat">Adjoined flat</option>
+								<option value="Apartment">Apartment</option>
+								<option value="DBSS">DBSS</option>
+								<option value="Improved">Improved</option>
+								<option value="Improved-Maisonette">Improved-Maisonette</option>
+								<option value="Maisonette">Maisonette</option>
+								<option value="Model A">Model A</option>
+								<option value="Model A-Maisonette">Model A-Maisonette</option>
+								<option value="Model A2">Model A2</option>
+								<option value="Multi Generation">Multi Generation</option>
+								<option value="New Generation">New Generation</option>
+								<option value="Premium Apartment">Premium Apartment</option>
+								<option value="Premium Apartment Loft">Premium Apartment Loft</option>
+								<option value="Premium Maisonette">Premium Maisonette</option>
+								<option value="Simplified">Simplified</option>
+								<option value="Standard">Standard</option>
+								<option value="Terrace">Terrace</option>
+								<option value="Type S1">Type S1</option>
+								<option value="Type S2">Type S2</option>
 							</select>
-      						<!--<input type="text" class="form-control" id="inputFirstName3" th:field="*{flatModel.flatModelName}">
+							<!--<input type="text" class="form-control" id="inputFirstName3" th:field="*{flatModel.flatModelName}">
       						<p class="form-err" th:if="${#fields.hasErrors('flatModel.flatModelName')}" th:errors="*{flatModel.flatModelName}"></p>-->
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.floorArea}">Floor Area</label>
-    					<div class="col-sm-9">
-      						<input type="number" step=".1" class="form-control" id="inputFirstName3" th:field="*{floorArea}">
-      						<p class="form-err" th:if="${#fields.hasErrors('floorArea')}" th:errors="*{floorArea}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.leaseYear}">Lease Year</label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="inputFirstName3" th:field="*{leaseYear}">
-      						<p class="form-err" th:if="${#fields.hasErrors('leaseYear')}" th:errors="*{leaseYear}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.price}">Price</label>
-    					<div class="col-sm-9">
-      						<input type="number" step=".01" class="form-control" id="inputFirstName3" th:field="*{price}">
-      						<p class="form-err" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.block}">Block</label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="inputFirstName3" th:field="*{block}">
-      						<p class="form-err" th:if="${#fields.hasErrors('block')}" th:errors="*{block}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.streetName}">Street Name</label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="inputFirstName3" th:field="*{streetName}">
-      						<p class="form-err" th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.postalCode}">Postal Code</label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="inputFirstName3" th:field="*{postalCode}">
-      						<p class="form-err" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.storey}">Storey</label>
-    					<div class="col-sm-9">
-      						<input type="number" class="form-control" id="inputFirstName3" th:field="*{storey}">
-      						<p class="form-err" th:if="${#fields.hasErrors('storey')}" th:errors="*{storey}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.unit}">Unit</label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="inputFirstName3" th:field="*{unit}">
-      						<p class="form-err" th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></p>
-    					</div>
-  					</div>
-  					
-  					<div class="row mb-3">
-    					<label for="inputFirstName3" class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.town}">Town</label>
-    					<div class="col-sm-9">
-    						<select class="form-control" th:field="*{Town.townName}">
-							    <option value="ANG MO KIO">ANG MO KIO</option>
-							    <option value="BEDOK">BEDOK</option>
-							    <option value="BISHAN">BISHAN</option>
-							    <option value="BUKIT BATOK">BUKIT BATOK</option>
-							    <option value="BUKIT MERAH">BUKIT MERAH</option>
-							    <option value="BUKIT PANJANG">BUKIT PANJANG</option>
-							    <option value="BUKIT TIMAH">BUKIT TIMAH</option>
-							    <option value="CENTRAL AREA">CENTRAL AREA</option>
-							    <option value="CHOA CHU KANG">CHOA CHU KANG</option>
-							    <option value="CLEMENTI">CLEMENTI</option>
-							    <option value="GEYLANG">GEYLANG</option>
-							    <option value="HOUGANG">HOUGANG</option>
-							    <option value="JURONG EAST">JURONG EAST</option>
-							    <option value="JURONG WEST">JURONG WEST</option>
-							    <option value="KALLANG/WHAMPOA">KALLANG/WHAMPOA</option>
-							    <option value="MARINE PARADE">MARINE PARADE</option>
-							    <option value="PASIR RIS">PASIR RIS</option>
-							    <option value="PUNGGOL">PUNGGOL</option>
-							    <option value="QUEENSTOWN">QUEENSTOWN</option>
-							    <option value="SEMBAWANG">SEMBAWANG</option>
-							    <option value="SENGKANG">SENGKANG</option>
-							    <option value="SERANGOON">SERANGOON</option>
-							    <option value="TAMPINES">TAMPINES</option>
-							    <option value="TOA PAYOH">TOA PAYOH</option>
-							    <option value="WOODLANDS">WOODLANDS</option>
-							    <option value="YISHUN">YISHUN</option>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.floorArea}">Floor
+							Area</label>
+						<div class="col-sm-9">
+							<input type="number" step=".1" class="form-control" id="inputFirstName3"
+								th:field="*{floorArea}">
+							<p class="form-err" th:if="${#fields.hasErrors('floorArea')}" th:errors="*{floorArea}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.leaseYear}">Lease
+							Year</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputFirstName3" th:field="*{leaseYear}">
+							<p class="form-err" th:if="${#fields.hasErrors('leaseYear')}" th:errors="*{leaseYear}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.price}">Price</label>
+						<div class="col-sm-9">
+							<input type="number" step=".01" class="form-control" id="inputFirstName3"
+								th:field="*{price}">
+							<p class="form-err" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.block}">Block</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputFirstName3" th:field="*{block}">
+							<p class="form-err" th:if="${#fields.hasErrors('block')}" th:errors="*{block}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.streetName}">Street Name</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputFirstName3" th:field="*{streetName}">
+							<p class="form-err" th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}">
+							</p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.postalCode}">Postal Code</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputFirstName3" th:field="*{postalCode}">
+							<p class="form-err" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">
+							</p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.storey}">Storey</label>
+						<div class="col-sm-9">
+							<input type="number" class="form-control" id="inputFirstName3" th:field="*{storey}">
+							<p class="form-err" th:if="${#fields.hasErrors('storey')}" th:errors="*{storey}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.unit}">Unit</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputFirstName3" th:field="*{unit}">
+							<p class="form-err" th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></p>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label for="inputFirstName3" class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.town}">Town</label>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="*{Town.townName}">
+								<option value="ANG MO KIO">ANG MO KIO</option>
+								<option value="BEDOK">BEDOK</option>
+								<option value="BISHAN">BISHAN</option>
+								<option value="BUKIT BATOK">BUKIT BATOK</option>
+								<option value="BUKIT MERAH">BUKIT MERAH</option>
+								<option value="BUKIT PANJANG">BUKIT PANJANG</option>
+								<option value="BUKIT TIMAH">BUKIT TIMAH</option>
+								<option value="CENTRAL AREA">CENTRAL AREA</option>
+								<option value="CHOA CHU KANG">CHOA CHU KANG</option>
+								<option value="CLEMENTI">CLEMENTI</option>
+								<option value="GEYLANG">GEYLANG</option>
+								<option value="HOUGANG">HOUGANG</option>
+								<option value="JURONG EAST">JURONG EAST</option>
+								<option value="JURONG WEST">JURONG WEST</option>
+								<option value="KALLANG/WHAMPOA">KALLANG/WHAMPOA</option>
+								<option value="MARINE PARADE">MARINE PARADE</option>
+								<option value="PASIR RIS">PASIR RIS</option>
+								<option value="PUNGGOL">PUNGGOL</option>
+								<option value="QUEENSTOWN">QUEENSTOWN</option>
+								<option value="SEMBAWANG">SEMBAWANG</option>
+								<option value="SENGKANG">SENGKANG</option>
+								<option value="SERANGOON">SERANGOON</option>
+								<option value="TAMPINES">TAMPINES</option>
+								<option value="TOA PAYOH">TOA PAYOH</option>
+								<option value="WOODLANDS">WOODLANDS</option>
+								<option value="YISHUN">YISHUN</option>
 							</select>
-      						<p class="form-err" th:if="${#fields.hasErrors('town')}" th:errors="*{town}"></p>
-    					</div>
-  					</div>
-  					<div class="row mb-4">
-  						<label class="col-sm-3 col-form-label label-alt" th:text="#{propertyform.label.images}">Images</label>
-    					<div class="col-sm-9" th:if="*{propertyId} == null")>
-                            <div class="col-sm-3">
-                                <p></p>
-                                <p>&nbsp;Cover:&nbsp;</p>
-                                <input type="file" name="image1" accept="image/png, image/jpeg" />
-                                
-                                
-                            
-                        </div>
-                        <div class="col-sm-4">
-                            <p></p>
-                            <p>&nbsp;Image 2:&nbsp;</p>
-      						<input type="file" name="image2" accept="image/png, image/jpeg" />
-                              
-                            
-                        </div>
-                        <div class="col-sm-4">
-                            <p></p>
-                            <p>&nbsp;Image 3:&nbsp;</p>
-                        <input type="file" name="image3" accept="image/png, image/jpeg" />
-                        </div>
-                           
-      						
-                       
-    					</div>
-    					<div class="col-sm-9" th:if="*{propertyId} != null")>
-      						<a th:href="@{/property/property-images/{id}(id=*{propertyId})}"><button type="button" class="btn btn-outline-secondary">Edit Images</button></a>
-      						<p th:if="${property.propertyImages == null or #lists.isEmpty(property.propertyImages)}" th:text="#{propertyform.label.noImageFound}">No Images Found</p>
-      						<div th:if="${property.propertyImages != null and not #lists.isEmpty(property.propertyImages)}">
-      							<p th:each="pImage : *{propertyImages}"><span th:text="${pImage.imageFileName}"></span> <span th:if="${pImage.mainImg}">(main)</span></p>
-      						</div>
-      						
-    					</div>
-    					
-  						
-  					</div>
+							<p class="form-err" th:if="${#fields.hasErrors('town')}" th:errors="*{town}"></p>
+						</div>
+					</div>
+					<div class="row mb-4">
+						<label class="col-sm-3 col-form-label label-alt"
+							th:text="#{propertyform.label.images}">Images</label>
+						<div class="col-sm-9" th:if="*{propertyId} == null" )>
+							<div class="col-sm-3">
+								<p></p>
+								<p>&nbsp;Cover:&nbsp;</p>
+								<input type="file" name="image1" accept="image/png, image/jpeg" />
+							</div>
+							<div class="col-sm-4">
+								<p></p>
+								<p>&nbsp;Image 2:&nbsp;</p>
+								<input type="file" name="image2" accept="image/png, image/jpeg" />
+							</div>
+							<div class="col-sm-4">
+								<p></p>
+								<p>&nbsp;Image 3:&nbsp;</p>
+								<input type="file" name="image3" accept="image/png, image/jpeg" />
+							</div>
+
+						</div>
+						<div class="col-sm-9" th:if="*{propertyId} != null" )>
+							<a th:href="@{/property/property-images/{id}(id=*{propertyId})}"><button type="button"
+									class="btn btn-outline-secondary">Edit Images</button></a>
+							<p th:if="${property.propertyImages == null or #lists.isEmpty(property.propertyImages)}"
+								th:text="#{propertyform.label.noImageFound}">No Images Found</p>
+							<div
+								th:if="${property.propertyImages != null and not #lists.isEmpty(property.propertyImages)}">
+								<p th:each="pImage : *{propertyImages}"><span th:text="${pImage.imageFileName}"></span>
+									<span th:if="${pImage.mainImg}">(main)</span></p>
+							</div>
+
+						</div>
+					</div>
 
 					<input type="submit" value="Submit" class="btn btn-secondary btn-block"></input>
-                    <br/>
-                    <br/>
+					<br />
+					<br />
 				</form>
-			<!-- </div> -->
-			<!-- <div class="col-3"></div> -->
-        </div>
+			</div>
 		</div>
 	</div>
 
 </body>
+
 </html>

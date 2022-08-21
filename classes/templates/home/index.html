@@ -25,16 +25,7 @@
 	<!-- Menu section -->
 	<div th:replace="fragments/layout :: headermenu"></div>
 	<br>
-	<!-- <div class="container d-sm-none">
-        <div class="row">
-            <div class="col-md-12">
-                <button class="btn btn-primary" type="button" data-toggle="collapse"
-                    data-target="#searchFieldsContainer" aria-expanded="false" aria-controls="searchFieldsContainer">
-                    Button with data-target
-                </button>
-            </div>
-        </div>
-    </div> -->
+
 	<div class="container formContainer">
 		<div id="searchFieldsContainer">
 			<form th:action="@{/search}" method="get">
@@ -100,12 +91,6 @@
 						</select>
 					</div>
 				</div>
-				<!-- <div class="form-row">
-                <div class="form-group col-md-12">
-                    <button class="btn btn-secondary btn-block search-bar" type="submit"><i class="fa fa-search"></i>&nbsp;<span
-                            th:text=#{home.searchButton}></span></button>
-                </div>
-            </div> -->
 			</form>
 		</div>
 	</div>
